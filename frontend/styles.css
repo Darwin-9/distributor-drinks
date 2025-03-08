@@ -1,0 +1,567 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    transition: color 0.3s;
+    margin-block: auto;
+}
+
+nav a:hover {
+    color: #ff6347;
+}
+
+.login-btn {
+    background-color: #ff6347;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #e5533d;
+}
+
+/* Sección de Bienvenida */
+.hero {
+    background: url('img/camion.avif') no-repeat center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #000000;
+}
+
+.hero-content h2 {
+    font-size: 48px;
+    margin: 0;
+}
+
+.hero-content p {
+    font-size: 24px;
+    margin: 10px 0 20px;
+}
+
+.btn {
+    background-color: #ff6347;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #e5533d;
+}
+
+/* Sección de Servicios */
+.servicios {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.servicios h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.servicios-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.servicio {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.servicio:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.servicio .icono {
+    font-size: 48px;
+    color: #ff6347;
+    margin-bottom: 20px;
+}
+
+.servicio h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.servicio p {
+    font-size: 18px;
+    color: #666;
+}
+
+/* Sección de Catálogo */
+.catalogo {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.catalogo h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.productos-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.producto {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.producto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.producto img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.producto h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.producto p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.producto .precio {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff6347;
+    display: block;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* Sección de Información */
+.informacion {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.informacion h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.informacion-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.info-block {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.info-block:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.info-block .icono {
+    font-size: 48px;
+    color: #ff6347;
+    margin-bottom: 20px;
+}
+
+.info-block h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.info-block p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+/* Estilos para la sección de inicio de sesión */
+login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.login-container h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #444;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f8f8f8;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #2575fc;
+    outline: none;
+    box-shadow: 0 0 8px rgba(37, 117, 252, 0.3);
+    background: #fff;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #2575fc;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #1a5bbf;
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.register-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.register-link a {
+    color: #2575fc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    color: #1a5bbf;
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+
+/* Estilos para la sección de CRUD */
+/* Sección de CRUD */
+.crud-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.crud-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.actions {
+    margin-bottom: 20px;
+}
+
+.btn-add {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add:hover {
+    background-color: #45a049;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+#product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#product-table th,
+#product-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#product-table th {
+    background-color: #ff6347;
+    color: #fff;
+}
+
+#product-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#product-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-edit {
+    background-color: #4CAF50;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.btn-edit:hover {
+    background-color: #45a049;
+}
+
+.btn-delete {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background-color: #e53935;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #333;
+}
+
+/* Formulario dentro del modal */
+#product-form .form-group {
+    margin-bottom: 15px;
+}
+
+#product-form label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+#product-form input,
+#product-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+#product-form input:focus,
+#product-form textarea:focus {
+    border-color: #ff6347;
+    outline: none;
+}
+
+#submit-btn {
+    background-color: #ff6347;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#submit-btn:hover {
+    background-color: #e5533d;
+}
+
+/* Diseño responsive */
+@media (max-width: 768px) {
+    header {
+        padding: 15px;
+    }
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    .servicios-grid, .productos-grid, .informacion-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    .servicio, .producto, .info-block {
+        width: 90%;
+    }
+    .login-container {
+        width: 90%;
+        padding: 20px;
+    }
+    .table-container {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 {
+        font-size: 32px;
+    }
+    .hero-content p {
+        font-size: 18px;
+    }
+    .btn {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+    .form-group input {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
