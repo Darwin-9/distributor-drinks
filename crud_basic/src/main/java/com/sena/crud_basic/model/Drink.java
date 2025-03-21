@@ -5,13 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name="drink")
 public class Drink {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="drink_id", nullable = false)
+    @Column(name="drink_id")
     private int drink_id;
 
     @Column(name="drink_name", length=50, nullable = false)
@@ -23,15 +25,21 @@ public class Drink {
     @Column(name="price", nullable = false)
     private double price;
 
-    @Column(name="trademark_id", nullable = false)
-    private int trademark_id;
+    @ManyToOne
+    @JoinColumn(name= "trademark_id")
+    private Trademark trademark;
 
-    public Drink(int drink_id, String drink_name, int volume, double price, int trademark_id) {
+    
+
+    public Drink() {
+    }
+
+    public Drink(int drink_id, String drink_name, int volume, double price, Trademark trademark) {
         this.drink_id = drink_id;
         this.drink_name = drink_name;
         this.volume = volume;
         this.price = price;
-        this.trademark_id = trademark_id;
+        this.trademark = trademark;
     }
 
     public int getDrink_id() {
@@ -66,11 +74,11 @@ public class Drink {
         this.price = price;
     }
 
-    public int getTrademark_id() {
-        return trademark_id;
+    public Trademark getTrademark() {
+        return trademark;
     }
 
-    public void setTrademark_id(int trademark_id) {
-        this.trademark_id = trademark_id;
+    public void setTrademark(Trademark trademark) {
+        this.trademark = trademark;
     }
 }

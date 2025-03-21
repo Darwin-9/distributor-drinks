@@ -1,28 +1,40 @@
 package com.sena.crud_basic.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name="truck_drink")
 public class TruckDrink {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="truck_drink_id", nullable = false)
+    @Column(name="truck_drink_id")
     private int truck_drink_id;
 
-    @Column(name="truck_id", nullable = false)
-    private int truck_id;
+    @ManyToOne
+    @JoinColumn(name="truck_id", nullable = false)
+    private Truck truck;
 
-    @Column(name="drink_id", nullable = false)
-    private int drink_id;
+    @ManyToOne
+    @JoinColumn(name="drink_id", nullable = false)
+    private Drink drink;
 
     @Column(name="stock", nullable = false)
     private int stock;
 
-    public TruckDrink(int truck_drink_id, int truck_id, int drink_id, int stock) {
+
+    public TruckDrink() {
+    }
+
+    public TruckDrink(int truck_drink_id, Truck truck, Drink drink, int stock) {
         this.truck_drink_id = truck_drink_id;
-        this.truck_id = truck_id;
-        this.drink_id = drink_id;
+        this.truck = truck;
+        this.drink = drink;
         this.stock = stock;
     }
 
@@ -34,20 +46,20 @@ public class TruckDrink {
         this.truck_drink_id = truck_drink_id;
     }
 
-    public int getTruck_id() {
-        return truck_id;
+    public Truck getTruck() {
+        return truck;
     }
 
-    public void setTruck_id(int truck_id) {
-        this.truck_id = truck_id;
+    public void setTruck(Truck truck) {
+        this.truck = truck;
     }
 
-    public int getDrink_id() {
-        return drink_id;
+    public Drink getDrink() {
+        return drink;
     }
 
-    public void setDrink_id(int drink_id) {
-        this.drink_id = drink_id;
+    public void setDrink(Drink drink) {
+        this.drink = drink;
     }
 
     public int getStock() {

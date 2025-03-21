@@ -5,13 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name="driver")
 public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="driver_id", nullable = false)
+    @Column(name="driver_id")
     private int driver_id;
 
     @Column(name="driver_first_name", length=50, nullable = false)
@@ -23,8 +25,22 @@ public class Driver {
     @Column(name="license_number", length=20, nullable = false)
     private String license_number;
 
-    public Driver(int driver_id, String driver_first_name, String driver_last_name, String license_number) {
+    @ManyToOne
+    @JoinColumn(name = "distributor_id")
+    private Distributor distributor;
+
+    @ManyToOne
+    @JoinColumn(name = "truck_id")
+    private Truck truck;
+
+    
+
+    public Driver() {
+    }
+
+    public Driver(int driver_id, String driver_first_name, String driver_last_name, String license_number, Truck truck, Distributor distributor) {
         this.driver_id = driver_id;
+        this.truck = truck;
         this.driver_first_name = driver_first_name;
         this.driver_last_name = driver_last_name;
         this.license_number = license_number;
@@ -61,4 +77,24 @@ public class Driver {
     public void setLicense_number(String license_number) {
         this.license_number = license_number;
     }
+
+    public void setDistributor_id(Distributor distributor) {
+        this.distributor = distributor;
+    }
+
+    public Distributor getDistributor() {
+        return distributor;
+    }
+
+    public void setTruck(Truck truck) {
+        this.truck = truck;
+    }
+
+    public Truck getTruck() {
+        return truck;
+    }
+
+   
+
+    
 }

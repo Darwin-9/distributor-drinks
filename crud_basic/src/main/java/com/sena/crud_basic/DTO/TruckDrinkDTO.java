@@ -1,31 +1,34 @@
 package com.sena.crud_basic.DTO;
 
+import com.sena.crud_basic.model.Drink;
+import com.sena.crud_basic.model.Truck;
+
 public class TruckDrinkDTO {
 
-    private int truck_id;
-    private int drink_id;
+    private Truck truck;
+    private Drink drink;
     private int stock;
 
-    public TruckDrinkDTO(int truck_id, int drink_id, int stock) {
-        this.truck_id = truck_id;
-        this.drink_id = drink_id;
+    public TruckDrinkDTO(Truck truck, Drink drink, int stock) {
+        this.truck = truck;
+        this.drink = drink;
         this.stock = stock;
     }
 
-    public int getTruck_id() {
-        return truck_id;
+    public Truck getTruck() {
+        return truck;
     }
 
-    public void setTruck_id(int truck_id) {
-        this.truck_id = truck_id;
+    public void setTruck(Truck truck) {
+        this.truck = truck;
     }
 
-    public int getDrink_id() {
-        return drink_id;
+    public Drink getDrink() {
+        return drink;
     }
 
-    public void setDrink_id(int drink_id) {
-        this.drink_id = drink_id;
+    public void setDrink(Drink drink) {
+        this.drink = drink;
     }
 
     public int getStock() {

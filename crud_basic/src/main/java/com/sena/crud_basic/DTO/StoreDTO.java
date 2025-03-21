@@ -1,5 +1,6 @@
 package com.sena.crud_basic.DTO;
 
+
 public class StoreDTO {
 
     private String store_name;

@@ -43,6 +43,6 @@ public class DriverService {
                 0,
                 driverDTO.getDriver_first_name(),
                 driverDTO.getDriver_last_name(),
-                driverDTO.getLicense_number());
+                driverDTO.getLicense_number(), null, null);
     }
 }

@@ -33,16 +33,16 @@ public class StoreDrinkService {
 
     public StoreDrinkDTO convertToDTO(StoreDrink storeDrink) {
         return new StoreDrinkDTO(
-                storeDrink.getStore_id(),
-                storeDrink.getDrink_id(),
+                storeDrink.getStore(),
+                storeDrink.getDrink(),
                 storeDrink.getStock());
     }
 
     public StoreDrink convertToModel(StoreDrinkDTO storeDrinkDTO) {
         return new StoreDrink(
                 0,
-                storeDrinkDTO.getStore_id(),
-                storeDrinkDTO.getDrink_id(),
+                storeDrinkDTO.getStore(),
+                storeDrinkDTO.getDrink(),
                 storeDrinkDTO.getStock());
     }
 }

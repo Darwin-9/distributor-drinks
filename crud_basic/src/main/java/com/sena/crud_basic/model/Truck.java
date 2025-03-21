@@ -11,7 +11,7 @@ public class Truck {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="truck_id", nullable = false)
+    @Column(name="truck_id")
     private int truck_id;
 
     @Column(name="plate_number", length=20, nullable = false)
@@ -22,6 +22,11 @@ public class Truck {
 
     @Column(name="capacity", nullable = false)
     private int capacity;
+
+    
+
+    public Truck() {
+    }
 
     public Truck(int truck_id, String plate_number, String model, int capacity) {
         this.truck_id = truck_id;

@@ -2,32 +2,46 @@ package com.sena.crud_basic.DTO;
 
 import java.time.LocalDateTime;
 
+import com.sena.crud_basic.model.Distributor;
+import com.sena.crud_basic.model.Store;
+
+
+
+
 public class OrderDTO {
 
-    private int store_id;
-    private int distributor_id;
+    private StoreDTO store;
+    private DistributorDTO distributor;
     private LocalDateTime order_date;
 
-    public OrderDTO(int store_id, int distributor_id, LocalDateTime order_date) {
-        this.store_id = store_id;
-        this.distributor_id = distributor_id;
+    public OrderDTO(StoreDTO store, DistributorDTO distributor, LocalDateTime order_date) {
+        this.store = store;
+        this.distributor = distributor;
         this.order_date = order_date;
     }
 
-    public int getStore_id() {
-        return store_id;
+   
+
+    public OrderDTO(Store store2, Distributor distributor2, LocalDateTime order_date2) {
+        //TODO Auto-generated constructor stub
     }
 
-    public void setStore_id(int store_id) {
-        this.store_id = store_id;
+
+
+    public StoreDTO getStore() {
+        return store;
     }
 
-    public int getDistributor_id() {
-        return distributor_id;
+    public void setStore(StoreDTO store) {
+        this.store = store;
     }
 
-    public void setDistributor_id(int distributor_id) {
-        this.distributor_id = distributor_id;
+    public DistributorDTO getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(DistributorDTO distributor) {
+        this.distributor = distributor;
     }
 
     public LocalDateTime getOrder_date() {

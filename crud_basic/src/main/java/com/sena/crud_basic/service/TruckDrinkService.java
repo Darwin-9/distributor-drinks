@@ -33,16 +33,16 @@ public class TruckDrinkService {
 
     public TruckDrinkDTO convertToDTO(TruckDrink truckDrink) {
         return new TruckDrinkDTO(
-                truckDrink.getTruck_id(),
-                truckDrink.getDrink_id(),
+                truckDrink.getTruck(),
+                truckDrink.getDrink(),
                 truckDrink.getStock());
     }
 
     public TruckDrink convertToModel(TruckDrinkDTO truckDrinkDTO) {
         return new TruckDrink(
                 0,
-                truckDrinkDTO.getTruck_id(),
-                truckDrinkDTO.getDrink_id(),
+                truckDrinkDTO.getTruck(),
+                truckDrinkDTO.getDrink(),
                 truckDrinkDTO.getStock());
     }
 }

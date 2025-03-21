@@ -33,16 +33,16 @@ public class OrderService {
 
     public OrderDTO convertToDTO(Order order) {
         return new OrderDTO(
-                order.getStore_id(),
-                order.getDistributor_id(),
+                order.getStore(),
+                order.getDistributor(),
                 order.getOrder_date());
     }
 
     public Order convertToModel(OrderDTO orderDTO) {
         return new Order(
                 0,
-                orderDTO.getStore_id(),
-                orderDTO.getDistributor_id(),
+                orderDTO.getStore(),
+                orderDTO.getDistributor(),
                 orderDTO.getOrder_date());
     }
 }

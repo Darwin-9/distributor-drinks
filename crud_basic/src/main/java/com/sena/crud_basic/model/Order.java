@@ -1,30 +1,53 @@
 package com.sena.crud_basic.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import java.time.LocalDateTime;
 
-@Entity(name="order")
+import com.sena.crud_basic.DTO.DistributorDTO;
+import com.sena.crud_basic.DTO.StoreDTO;
+
+@Entity(name="orderr_info")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="order_id", nullable = false)
+    @Column(name="order_id")
     private int order_id;
 
-    @Column(name="store_id", nullable = false)
-    private int store_id;
+    @ManyToOne
+    @JoinColumn(name="store_id")
+    private Store store;
 
-    @Column(name="distributor_id", nullable = false)
-    private int distributor_id;
+    @ManyToOne
+    @JoinColumn(name="distributor_id")
+    private Distributor distributor;
 
-    @Column(name="order_date", nullable = false)
+    @Column(name="order_date")
     private LocalDateTime order_date;
 
-    public Order(int order_id, int store_id, int distributor_id, LocalDateTime order_date) {
+    
+
+    public Order() {
+    }
+
+    public Order(int order_id, Store store, Distributor distributor, LocalDateTime order_date) {
         this.order_id = order_id;
-        this.store_id = store_id;
-        this.distributor_id = distributor_id;
+        this.store = store;
+        this.distributor = distributor;
         this.order_date = order_date;
+    }
+
+   
+
+    public Order(int i, StoreDTO store2, DistributorDTO distributor2, LocalDateTime order_date2) {
+        //TODO Auto-generated constructor stub
     }
 
     public int getOrder_id() {
@@ -35,20 +58,20 @@ public class Order {
         this.order_id = order_id;
     }
 
-    public int getStore_id() {
-        return store_id;
+    public Store getStore() {
+        return store;
     }
 
-    public void setStore_id(int store_id) {
-        this.store_id = store_id;
+    public void setStore(Store store) {
+        this.store = store;
     }
 
-    public int getDistributor_id() {
-        return distributor_id;
+    public Distributor getDistributor() {
+        return distributor;
     }
 
-    public void setDistributor_id(int distributor_id) {
-        this.distributor_id = distributor_id;
+    public void setDistributor(Distributor distributor) {
+        this.distributor = distributor;
     }
 
     public LocalDateTime getOrder_date() {

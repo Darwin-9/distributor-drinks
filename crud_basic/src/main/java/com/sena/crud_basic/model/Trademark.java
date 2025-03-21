@@ -11,11 +11,16 @@ public class Trademark {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="trademark_id", nullable = false)
+    @Column(name="trademark_id")
     private int trademark_id;
 
     @Column(name="trademark_name", length=50, nullable = false)
     private String trademark_name;
+
+    
+
+    public Trademark() {
+    }
 
     public Trademark(int trademark_id, String trademark_name) {
         this.trademark_id = trademark_id;

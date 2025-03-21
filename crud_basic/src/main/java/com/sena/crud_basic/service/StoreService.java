@@ -43,6 +43,6 @@ public class StoreService {
                 0,
                 storeDTO.getStore_name(),
                 storeDTO.getAddress(),
-                storeDTO.getPhone_number());
+                storeDTO.getPhone_number(), null);
     }
 }

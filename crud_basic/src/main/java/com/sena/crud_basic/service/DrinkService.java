@@ -36,7 +36,7 @@ public class DrinkService {
                 drink.getDrink_name(),
                 drink.getVolume(),
                 drink.getPrice(),
-                drink.getTrademark_id());
+                drink.getTrademark());
     }
 
     public Drink convertToModel(DrinkDTO drinkDTO) {
@@ -45,6 +45,6 @@ public class DrinkService {
                 drinkDTO.getDrink_name(),
                 drinkDTO.getVolume(),
                 drinkDTO.getPrice(),
-                drinkDTO.getTrademark_id());
+                drinkDTO.getTrademark());
     }
 }

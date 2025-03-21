@@ -1,13 +1,17 @@
 package com.sena.crud_basic.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity(name="distributor")
 public class Distributor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="distributor_id", nullable = false)
+    @Column(name="distributor_id")
     private int distributor_id;
 
     @Column(name="distributor_name", length=50, nullable = false)
