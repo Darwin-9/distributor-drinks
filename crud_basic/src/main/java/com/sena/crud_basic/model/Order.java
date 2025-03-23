@@ -10,10 +10,7 @@ import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
-import com.sena.crud_basic.DTO.DistributorDTO;
-import com.sena.crud_basic.DTO.StoreDTO;
-
-@Entity(name="orderr_info")
+@Entity(name="order_info")
 public class Order {
 
     @Id
@@ -22,32 +19,23 @@ public class Order {
     private int order_id;
 
     @ManyToOne
-    @JoinColumn(name="store_id")
+    @JoinColumn(name="store_id", nullable=false)
     private Store store;
 
-    @ManyToOne
-    @JoinColumn(name="distributor_id")
-    private Distributor distributor;
-
-    @Column(name="order_date")
+    @Column(name="order_date", nullable=false)
     private LocalDateTime order_date;
 
-    
+    @Column(name="status", nullable=false, length=20)
+    private String status;
 
     public Order() {
     }
 
-    public Order(int order_id, Store store, Distributor distributor, LocalDateTime order_date) {
+    public Order(int order_id, Store store, LocalDateTime order_date, String status) {
         this.order_id = order_id;
         this.store = store;
-        this.distributor = distributor;
         this.order_date = order_date;
-    }
-
-   
-
-    public Order(int i, StoreDTO store2, DistributorDTO distributor2, LocalDateTime order_date2) {
-        //TODO Auto-generated constructor stub
+        this.status = status;
     }
 
     public int getOrder_id() {
@@ -66,19 +54,19 @@ public class Order {
         this.store = store;
     }
 
-    public Distributor getDistributor() {
-        return distributor;
-    }
-
-    public void setDistributor(Distributor distributor) {
-        this.distributor = distributor;
-    }
-
     public LocalDateTime getOrder_date() {
         return order_date;
     }
 
     public void setOrder_date(LocalDateTime order_date) {
         this.order_date = order_date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

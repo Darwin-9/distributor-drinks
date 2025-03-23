@@ -14,25 +14,23 @@ public class Truck {
     @Column(name="truck_id")
     private int truck_id;
 
-    @Column(name="plate_number", length=20, nullable = false)
-    private String plate_number;
+    @Column(name="capacity", nullable=false)
+    private double capacity;
 
-    @Column(name="model", length=50, nullable = false)
+    @Column(name="model", nullable=false, length=50)
     private String model;
 
-    @Column(name="capacity", nullable = false)
-    private int capacity;
-
-    
+    @Column(name="plate_number", nullable=false, length=20, unique=true)
+    private String plate_number;
 
     public Truck() {
     }
 
-    public Truck(int truck_id, String plate_number, String model, int capacity) {
+    public Truck(int truck_id, double capacity, String model, String plate_number) {
         this.truck_id = truck_id;
-        this.plate_number = plate_number;
-        this.model = model;
         this.capacity = capacity;
+        this.model = model;
+        this.plate_number = plate_number;
     }
 
     public int getTruck_id() {
@@ -43,12 +41,12 @@ public class Truck {
         this.truck_id = truck_id;
     }
 
-    public String getPlate_number() {
-        return plate_number;
+    public double getCapacity() {
+        return capacity;
     }
 
-    public void setPlate_number(String plate_number) {
-        this.plate_number = plate_number;
+    public void setCapacity(double capacity) {
+        this.capacity = capacity;
     }
 
     public String getModel() {
@@ -59,11 +57,11 @@ public class Truck {
         this.model = model;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public String getPlate_number() {
+        return plate_number;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setPlate_number(String plate_number) {
+        this.plate_number = plate_number;
     }
 }

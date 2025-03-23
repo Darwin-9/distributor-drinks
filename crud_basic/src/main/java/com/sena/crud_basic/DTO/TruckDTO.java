@@ -2,22 +2,22 @@ package com.sena.crud_basic.DTO;
 
 public class TruckDTO {
 
-    private String plate_number;
+    private double capacity;
     private String model;
-    private int capacity;
+    private String plate_number;
 
-    public TruckDTO(String plate_number, String model, int capacity) {
-        this.plate_number = plate_number;
-        this.model = model;
+    public TruckDTO(double capacity, String model, String plate_number) {
         this.capacity = capacity;
-    }
-
-    public String getPlate_number() {
-        return plate_number;
-    }
-
-    public void setPlate_number(String plate_number) {
+        this.model = model;
         this.plate_number = plate_number;
+    }
+
+    public double getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(double capacity) {
+        this.capacity = capacity;
     }
 
     public String getModel() {
@@ -28,11 +28,11 @@ public class TruckDTO {
         this.model = model;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public String getPlate_number() {
+        return plate_number;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setPlate_number(String plate_number) {
+        this.plate_number = plate_number;
     }
 }

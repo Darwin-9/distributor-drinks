@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity(name="drink")
 public class Drink {
@@ -16,30 +14,27 @@ public class Drink {
     @Column(name="drink_id")
     private int drink_id;
 
-    @Column(name="drink_name", length=50, nullable = false)
-    private String drink_name;
+    @Column(name="name", nullable=false, length=100)
+    private String name;
 
-    @Column(name="volume", nullable = false)
-    private int volume;
-
-    @Column(name="price", nullable = false)
+    @Column(name="price", nullable=false)
     private double price;
 
-    @ManyToOne
-    @JoinColumn(name= "trademark_id")
-    private Trademark trademark;
+    @Column(name="volume", nullable=false)
+    private double volume;
 
-    
+    @Column(name="stock", nullable=false)
+    private int stock;
 
     public Drink() {
     }
 
-    public Drink(int drink_id, String drink_name, int volume, double price, Trademark trademark) {
+    public Drink(int drink_id, String name, double price, double volume, int stock) {
         this.drink_id = drink_id;
-        this.drink_name = drink_name;
-        this.volume = volume;
+        this.name = name;
         this.price = price;
-        this.trademark = trademark;
+        this.volume = volume;
+        this.stock = stock;
     }
 
     public int getDrink_id() {
@@ -50,20 +45,12 @@ public class Drink {
         this.drink_id = drink_id;
     }
 
-    public String getDrink_name() {
-        return drink_name;
+    public String getName() {
+        return name;
     }
 
-    public void setDrink_name(String drink_name) {
-        this.drink_name = drink_name;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getPrice() {
@@ -74,11 +61,19 @@ public class Drink {
         this.price = price;
     }
 
-    public Trademark getTrademark() {
-        return trademark;
+    public double getVolume() {
+        return volume;
     }
 
-    public void setTrademark(Trademark trademark) {
-        this.trademark = trademark;
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

@@ -1,35 +1,25 @@
 package com.sena.crud_basic.DTO;
 
-import com.sena.crud_basic.model.Trademark;
-
 public class DrinkDTO {
 
-    private String drink_name;
-    private int volume;
+    private String name;
     private double price;
-    private Trademark trademark;
+    private double volume; 
+    private int stock;
 
-    public DrinkDTO(String drink_name, int volume, double price, Trademark trademark) {
-        this.drink_name = drink_name;
-        this.volume = volume;
+    public DrinkDTO(String name, double price, double volume, int stock) {
+        this.name = name;
         this.price = price;
-        this.trademark = trademark;
-    }
-
-    public String getDrink_name() {
-        return drink_name;
-    }
-
-    public void setDrink_name(String drink_name) {
-        this.drink_name = drink_name;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
         this.volume = volume;
+        this.stock = stock;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getPrice() {
@@ -40,11 +30,19 @@ public class DrinkDTO {
         this.price = price;
     }
 
-    public Trademark getTrademark() {
-        return trademark;
+    public double getVolume() {
+        return volume;
     }
 
-    public void setTrademark(Trademark trademark) {
-        this.trademark = trademark;
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

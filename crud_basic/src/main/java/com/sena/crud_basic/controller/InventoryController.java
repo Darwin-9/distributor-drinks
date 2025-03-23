@@ -5,21 +5,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.sena.crud_basic.DTO.OrderDTO;
+import com.sena.crud_basic.DTO.InventoryDTO;
 import com.sena.crud_basic.DTO.responseDTO;
-import com.sena.crud_basic.service.OrderService;
+import com.sena.crud_basic.service.InventoryService;
 
 @RestController
-@RequestMapping("/api/v1/orders")
-public class OrderController {
+@RequestMapping("/api/v1/inventory")
+public class InventoryController {
 
     @Autowired
-    private OrderService orderService;
+    private InventoryService inventoryService;
 
-    // Registrar un nuevo pedido con validaciones
+    // Registrar un nuevo registro de inventario con validaciones
     @PostMapping("/")
-    public ResponseEntity<Object> register(@RequestBody OrderDTO orderDTO) {
-        responseDTO respuesta = orderService.save(orderDTO);
+    public ResponseEntity<Object> register(@RequestBody InventoryDTO inventoryDTO) {
+        responseDTO respuesta = inventoryService.save(inventoryDTO);
         if (respuesta.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(respuesta, HttpStatus.OK);
         } else {
@@ -27,26 +27,26 @@ public class OrderController {
         }
     }
 
-    // Consultar todos los pedidos
+    // Consultar todos los registros de inventario
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
-        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(inventoryService.findAll(), HttpStatus.OK);
     }
 
-    // Consultar un pedido por su ID
+    // Consultar un registro de inventario por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable int id) {
-        var order = orderService.findById(id);
-        if (!order.isPresent()) {
+        var inventory = inventoryService.findById(id);
+        if (!inventory.isPresent()) {
             return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(order.get(), HttpStatus.OK);
+        return new ResponseEntity<>(inventory.get(), HttpStatus.OK);
     }
 
-    // Eliminar un pedido por ID
+    // Eliminar un registro de inventario por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = orderService.deleteUser(id);
+        responseDTO message = inventoryService.deleteUser(id);
         if (message.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {

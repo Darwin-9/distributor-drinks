@@ -1,9 +1,9 @@
 package com.sena.crud_basic.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.sena.crud_basic.model.StoreDrink;
+import com.sena.crud_basic.model.Delivery;
 
-public interface IStoreDrink extends JpaRepository<StoreDrink, Integer> {
+public interface IDelivery extends JpaRepository<Delivery, Integer> {
     /*
      * C
      * R

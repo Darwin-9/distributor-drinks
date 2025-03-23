@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity(name="store")
 public class Store {
@@ -16,29 +14,27 @@ public class Store {
     @Column(name="store_id")
     private int store_id;
 
-    @Column(name="store_name", length=50, nullable = false)
-    private String store_name;
+    @Column(name="name", nullable=false, length=50)
+    private String name;
 
-    @Column(name="address", length=100, nullable = false)
+    @Column(name="address", nullable=false, length=100)
     private String address;
 
-    @Column(name="phone_number", length=15, nullable = false)
+    @Column(name="phone_number", nullable=false, length=15)
     private String phone_number;
 
-    @ManyToOne
-    @JoinColumn(name = "zone_id")
-    private Zone zone;
-
+    @Column(name="city", nullable=false, length=50)
+    private String city;
 
     public Store() {
     }
 
-    public Store(int store_id, String store_name, String address, String phone_number, Zone zone){
+    public Store(int store_id, String name, String address, String phone_number, String city) {
         this.store_id = store_id;
-        this.store_name = store_name;
+        this.name = name;
         this.address = address;
         this.phone_number = phone_number;
-        this.zone = zone;
+        this.city = city;
     }
 
     public int getStore_id() {
@@ -49,12 +45,12 @@ public class Store {
         this.store_id = store_id;
     }
 
-    public String getStore_name() {
-        return store_name;
+    public String getName() {
+        return name;
     }
 
-    public void setStore_name(String store_name) {
-        this.store_name = store_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -73,19 +69,11 @@ public class Store {
         this.phone_number = phone_number;
     }
 
-    public void setZone(Zone zone) {
-        this.zone = zone;
+    public String getCity() {
+        return city;
     }
 
-    public Zone getZone() {
-        return zone;
+    public void setCity(String city) {
+        this.city = city;
     }
-
-   
-
-    
-
-   
-
-    
 }

@@ -1,9 +1,9 @@
 package com.sena.crud_basic.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.sena.crud_basic.model.TruckDrink;
+import com.sena.crud_basic.model.Inventory;
 
-public interface ITruckDrink extends JpaRepository<TruckDrink, Integer> {
+public interface IInventory extends JpaRepository<Inventory, Integer> {
     /*
      * C
      * R

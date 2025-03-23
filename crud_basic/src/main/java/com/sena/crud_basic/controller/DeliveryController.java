@@ -5,21 +5,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.sena.crud_basic.DTO.OrderDTO;
+import com.sena.crud_basic.DTO.DeliveryDTO;
 import com.sena.crud_basic.DTO.responseDTO;
-import com.sena.crud_basic.service.OrderService;
+import com.sena.crud_basic.service.DeliveryService;
 
 @RestController
-@RequestMapping("/api/v1/orders")
-public class OrderController {
+@RequestMapping("/api/v1/deliveries")
+public class DeliveryController {
 
     @Autowired
-    private OrderService orderService;
+    private DeliveryService deliveryService;
 
-    // Registrar un nuevo pedido con validaciones
+    // Registrar una nueva entrega con validaciones
     @PostMapping("/")
-    public ResponseEntity<Object> register(@RequestBody OrderDTO orderDTO) {
-        responseDTO respuesta = orderService.save(orderDTO);
+    public ResponseEntity<Object> register(@RequestBody DeliveryDTO deliveryDTO) {
+        responseDTO respuesta = deliveryService.save(deliveryDTO);
         if (respuesta.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(respuesta, HttpStatus.OK);
         } else {
@@ -27,26 +27,26 @@ public class OrderController {
         }
     }
 
-    // Consultar todos los pedidos
+    // Consultar todas las entregas
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
-        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(deliveryService.findAll(), HttpStatus.OK);
     }
 
-    // Consultar un pedido por su ID
+    // Consultar una entrega por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable int id) {
-        var order = orderService.findById(id);
-        if (!order.isPresent()) {
+        var delivery = deliveryService.findById(id);
+        if (!delivery.isPresent()) {
             return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(order.get(), HttpStatus.OK);
+        return new ResponseEntity<>(delivery.get(), HttpStatus.OK);
     }
 
-    // Eliminar un pedido por ID
+    // Eliminar una entrega por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = orderService.deleteUser(id);
+        responseDTO message = deliveryService.deleteUser(id);
         if (message.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {

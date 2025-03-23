@@ -16,34 +16,28 @@ public class Driver {
     @Column(name="driver_id")
     private int driver_id;
 
-    @Column(name="driver_first_name", length=50, nullable = false)
-    private String driver_first_name;
+    @Column(name="first_name", nullable=false, length=50)
+    private String first_name;
 
-    @Column(name="driver_last_name", length=50, nullable = false)
-    private String driver_last_name;
+    @Column(name="last_name", nullable=false, length=50)
+    private String last_name;
 
-    @Column(name="license_number", length=20, nullable = false)
+    @Column(name="license_number", nullable=false, length=20, unique=true)
     private String license_number;
 
     @ManyToOne
-    @JoinColumn(name = "distributor_id")
-    private Distributor distributor;
-
-    @ManyToOne
-    @JoinColumn(name = "truck_id")
+    @JoinColumn(name="truck_id", nullable=false)
     private Truck truck;
-
-    
 
     public Driver() {
     }
 
-    public Driver(int driver_id, String driver_first_name, String driver_last_name, String license_number, Truck truck, Distributor distributor) {
+    public Driver(int driver_id, String first_name, String last_name, String license_number, Truck truck) {
         this.driver_id = driver_id;
-        this.truck = truck;
-        this.driver_first_name = driver_first_name;
-        this.driver_last_name = driver_last_name;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.license_number = license_number;
+        this.truck = truck;
     }
 
     public int getDriver_id() {
@@ -54,20 +48,20 @@ public class Driver {
         this.driver_id = driver_id;
     }
 
-    public String getDriver_first_name() {
-        return driver_first_name;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setDriver_first_name(String driver_first_name) {
-        this.driver_first_name = driver_first_name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getDriver_last_name() {
-        return driver_last_name;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setDriver_last_name(String driver_last_name) {
-        this.driver_last_name = driver_last_name;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getLicense_number() {
@@ -78,23 +72,11 @@ public class Driver {
         this.license_number = license_number;
     }
 
-    public void setDistributor_id(Distributor distributor) {
-        this.distributor = distributor;
-    }
-
-    public Distributor getDistributor() {
-        return distributor;
+    public Truck getTruck() {
+        return truck;
     }
 
     public void setTruck(Truck truck) {
         this.truck = truck;
     }
-
-    public Truck getTruck() {
-        return truck;
-    }
-
-   
-
-    
 }

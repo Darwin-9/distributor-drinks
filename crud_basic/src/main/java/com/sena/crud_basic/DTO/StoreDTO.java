@@ -1,24 +1,25 @@
 package com.sena.crud_basic.DTO;
 
-
 public class StoreDTO {
 
-    private String store_name;
+    private String name;
     private String address;
     private String phone_number;
+    private String city;
 
-    public StoreDTO(String store_name, String address, String phone_number) {
-        this.store_name = store_name;
+    public StoreDTO(String name, String address, String phone_number, String city) {
+        this.name = name;
         this.address = address;
         this.phone_number = phone_number;
+        this.city = city;
     }
 
-    public String getStore_name() {
-        return store_name;
+    public String getName() {
+        return name;
     }
 
-    public void setStore_name(String store_name) {
-        this.store_name = store_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -35,5 +36,13 @@ public class StoreDTO {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

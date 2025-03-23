@@ -5,21 +5,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.sena.crud_basic.DTO.OrderDTO;
+import com.sena.crud_basic.DTO.StoreUserDTO;
 import com.sena.crud_basic.DTO.responseDTO;
-import com.sena.crud_basic.service.OrderService;
+import com.sena.crud_basic.service.StoreUserService;
 
 @RestController
-@RequestMapping("/api/v1/orders")
-public class OrderController {
+@RequestMapping("/api/v1/store-users")
+public class StoreUserController {
 
     @Autowired
-    private OrderService orderService;
+    private StoreUserService storeUserService;
 
-    // Registrar un nuevo pedido con validaciones
+    // Registrar un nuevo usuario de tienda con validaciones
     @PostMapping("/")
-    public ResponseEntity<Object> register(@RequestBody OrderDTO orderDTO) {
-        responseDTO respuesta = orderService.save(orderDTO);
+    public ResponseEntity<Object> register(@RequestBody StoreUserDTO storeUserDTO) {
+        responseDTO respuesta = storeUserService.save(storeUserDTO);
         if (respuesta.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(respuesta, HttpStatus.OK);
         } else {
@@ -27,26 +27,26 @@ public class OrderController {
         }
     }
 
-    // Consultar todos los pedidos
+    // Consultar todos los usuarios de tienda
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
-        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(storeUserService.findAll(), HttpStatus.OK);
     }
 
-    // Consultar un pedido por su ID
+    // Consultar un usuario de tienda por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable int id) {
-        var order = orderService.findById(id);
-        if (!order.isPresent()) {
+        var storeUser = storeUserService.findById(id);
+        if (!storeUser.isPresent()) {
             return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(order.get(), HttpStatus.OK);
+        return new ResponseEntity<>(storeUser.get(), HttpStatus.OK);
     }
 
-    // Eliminar un pedido por ID
+    // Eliminar un usuario de tienda por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = orderService.deleteUser(id);
+        responseDTO message = storeUserService.deleteUser(id);
         if (message.getStatus().equals(HttpStatus.OK.toString())) {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
