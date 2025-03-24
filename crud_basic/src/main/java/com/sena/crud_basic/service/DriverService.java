@@ -57,9 +57,19 @@ public class DriverService {
         if (!driver.isPresent()) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El conductor no existe");
         }
-        data.deleteById(id);
-        return new responseDTO(HttpStatus.OK.toString(), "Conductor eliminado correctamente");
+         // Cambiar el estado del conductor a false (eliminación lógica)
+         driver.get().setStatus(false);
+         data.save(driver.get());
+ 
+         // Devolvemos una respuesta de éxito
+         return new responseDTO(
+             HttpStatus.OK.toString(),
+             "Conductor eliminado correctamente");
+        
     }
+
+
+
 
     // Método para convertir un modelo a un DTO
     public DriverDTO convertToDTO(Driver driver) {
@@ -71,7 +81,8 @@ public class DriverService {
         Truck truck = truckRepository.findById(driverDTO.getTruck_id()) // Obtener el camión desde la BD
             .orElseThrow(() -> new RuntimeException("Truck not found"));
 
-    return new Driver(0, driverDTO.getFirst_name(), driverDTO.getLast_name(), driverDTO.getLicense_number(), truck);
+    return new Driver(0, driverDTO.getFirst_name(), driverDTO.getLast_name(), driverDTO.getLicense_number(), truck, true);
+
     }
 
     

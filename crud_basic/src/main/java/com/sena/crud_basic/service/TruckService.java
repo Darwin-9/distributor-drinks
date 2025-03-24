@@ -48,8 +48,14 @@ public class TruckService {
         if (!truck.isPresent()) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El camión no existe");
         }
-        data.deleteById(id);
-        return new responseDTO(HttpStatus.OK.toString(), "Camión eliminado correctamente");
+        // Cambiar el estado del conductor a false (eliminación lógica)
+        truck.get().setStatus(false);
+        data.save(truck.get());
+
+        // Devolvemos una respuesta de éxito
+        return new responseDTO(
+            HttpStatus.OK.toString(),
+            "Camion eliminado correctamente");
     }
 
     // Método para convertir un modelo a un DTO
@@ -59,6 +65,6 @@ public class TruckService {
 
     // Método para convertir un DTO a un modelo
     public Truck convertToModel(TruckDTO truckDTO) {
-        return new Truck(0, truckDTO.getCapacity(), truckDTO.getModel(), truckDTO.getPlate_number());
+        return new Truck(0, truckDTO.getCapacity(), truckDTO.getModel(), truckDTO.getPlate_number(), true);
     }
 }

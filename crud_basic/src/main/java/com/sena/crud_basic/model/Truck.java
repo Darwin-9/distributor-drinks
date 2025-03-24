@@ -23,14 +23,18 @@ public class Truck {
     @Column(name="plate_number", nullable=false, length=20, unique=true)
     private String plate_number;
 
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public Truck() {
     }
 
-    public Truck(int truck_id, double capacity, String model, String plate_number) {
+    public Truck(int truck_id, double capacity, String model, String plate_number, boolean status) {
         this.truck_id = truck_id;
         this.capacity = capacity;
         this.model = model;
         this.plate_number = plate_number;
+        this.status = status;
     }
 
     public int getTruck_id() {
@@ -64,4 +68,14 @@ public class Truck {
     public void setPlate_number(String plate_number) {
         this.plate_number = plate_number;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
 }

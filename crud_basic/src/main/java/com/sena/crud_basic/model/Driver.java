@@ -29,15 +29,19 @@ public class Driver {
     @JoinColumn(name="truck_id", nullable=false)
     private Truck truck;
 
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public Driver() {
     }
 
-    public Driver(int driver_id, String first_name, String last_name, String license_number, Truck truck) {
+    public Driver(int driver_id, String first_name, String last_name, String license_number, Truck truck, boolean status) {
         this.driver_id = driver_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.license_number = license_number;
         this.truck = truck;
+        this.status = status;
     }
 
     public int getDriver_id() {
@@ -79,4 +83,14 @@ public class Driver {
     public void setTruck(Truck truck) {
         this.truck = truck;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
 }
