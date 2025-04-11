@@ -78,4 +78,14 @@ public class DrinkService {
     public Drink convertToModel(DrinkDTO drinkDTO) {
         return new Drink(0, drinkDTO.getName(), drinkDTO.getPrice(), drinkDTO.getVolume(), drinkDTO.getStock());
     }
+
+    public responseDTO update(DrinkDTO drinkDTO) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    public responseDTO deleteDrink(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteDrink'");
+    }
 }

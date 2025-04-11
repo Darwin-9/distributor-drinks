@@ -45,12 +45,23 @@ public class DrinkController {
 
     // Eliminar una bebida por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = drinkService.deleteUser(id);
-        if (message.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
+public ResponseEntity<Object> deleteById(@PathVariable int id) {
+    responseDTO message = drinkService.deleteDrink(id); // Cambiar deleteUser por deleteDrink
+    if (message.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
+}
+
+@PutMapping("/")
+public ResponseEntity<Object> update(@RequestBody DrinkDTO drinkDTO) {
+    responseDTO respuesta = drinkService.update(drinkDTO);
+    if (respuesta.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+    }
+}
+
 }
