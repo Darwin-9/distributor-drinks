@@ -29,15 +29,19 @@ public class StoreUser {
     @JoinColumn(name="store_id", nullable=false, unique=true)
     private Store store;
 
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public StoreUser() {
     }
 
-    public StoreUser(int store_user_id, String username, String password, String email, Store store) {
+    public StoreUser(int store_user_id, String username, String password, String email, Store store, boolean status) {
         this.store_user_id = store_user_id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.store = store;
+        this.status = status;
     }
 
     public int getStore_user_id() {
@@ -79,4 +83,14 @@ public class StoreUser {
     public void setStore(Store store) {
         this.store = store;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
 }

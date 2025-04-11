@@ -26,15 +26,19 @@ public class Store {
     @Column(name="city", nullable=false, length=50)
     private String city;
 
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public Store() {
     }
 
-    public Store(int store_id, String name, String address, String phone_number, String city) {
+    public Store(int store_id, String name, String address, String phone_number, String city, boolean status) {
         this.store_id = store_id;
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
         this.city = city;
+        this.status = status;
     }
 
     public int getStore_id() {
@@ -76,4 +80,14 @@ public class Store {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
 }

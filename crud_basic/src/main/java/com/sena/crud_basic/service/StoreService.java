@@ -55,6 +55,6 @@ public class StoreService {
 
     // Método para convertir un DTO a un modelo
     public Store convertToModel(StoreDTO storeDTO) {
-        return new Store(0, storeDTO.getName(), storeDTO.getAddress(), storeDTO.getPhone_number(), storeDTO.getCity());
+        return new Store(0, storeDTO.getName(), storeDTO.getAddress(), storeDTO.getPhone_number(), storeDTO.getCity(), true);
     }
 }

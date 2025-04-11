@@ -11,7 +11,7 @@ import com.sena.crud_basic.service.DrinkService;
 
 @RestController
 @RequestMapping("/api/v1/drinks")
-public class DrinkController {
+public class DrinkController { 
 
     @Autowired
     private DrinkService drinkService;

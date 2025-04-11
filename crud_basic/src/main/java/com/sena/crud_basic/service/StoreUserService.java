@@ -59,7 +59,7 @@ public class StoreUserService {
 
     // Método para convertir un DTO a un modelo
     public StoreUser convertToModel(StoreUserDTO storeUserDTO) {
-        return new StoreUser(0, storeUserDTO.getUsername(), null, storeUserDTO.getEmail(), null);
+        return new StoreUser(0, storeUserDTO.getUsername(), null, storeUserDTO.getEmail(), null, true);
     }
 
     // Método para validar el formato del correo electrónico

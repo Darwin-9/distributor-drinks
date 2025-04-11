@@ -23,7 +23,7 @@ public class Drink {
     @Column(name="volume", nullable=false)
     private double volume;
 
-    @Column(name="stock", nullable=false)
+    @Column(name="stock", nullable=false) 
     private int stock;
 
     public Drink() {

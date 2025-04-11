@@ -59,7 +59,7 @@ public class AdminService {
 
     // Método para convertir un DTO a un modelo
     public Admin convertToModel(AdminDTO adminDTO) {
-        return new Admin(0, adminDTO.getUsername(), adminDTO.getPassword(), adminDTO.getEmail());
+        return new Admin(0, adminDTO.getUsername(), adminDTO.getPassword(), adminDTO.getEmail(),true);
     }
 
     // Método para validar el formato del correo electrónico
@@ -67,4 +67,31 @@ public class AdminService {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
+
+    // Actualizar cliente
+    public responseDTO updateAdmin(int id, AdminDTO dto) {
+        Optional<Admin> adminOpt = data.findById(id);
+        if (!adminOpt.isPresent()) {
+            responseDTO respuesta = new responseDTO(
+                    HttpStatus.NOT_FOUND.toString(),
+                    "El cliente con ID " + id + " no existe");
+            return respuesta;
+        }
+        Admin existingAdmin = adminOpt.get();
+        existingAdmin.setUsername(dto.getUsername());
+        existingAdmin.setEmail(dto.getEmail());
+        existingAdmin.setPassword(dto.getPassword());
+
+        data.save(existingAdmin);
+
+        responseDTO respuesta = new responseDTO(
+                HttpStatus.OK.toString(),
+                "Admin actualizado correctamente");
+        return respuesta;
+    }
+
+    public List<Admin> filterAdmins(String name, String email, Boolean status) {
+        return data.filterAdmins(name, email, status);
+    }
+
 }

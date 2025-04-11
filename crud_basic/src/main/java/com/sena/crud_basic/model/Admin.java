@@ -23,14 +23,18 @@ public class Admin {
     @Column(name="email", nullable=false, length=100, unique=true)
     private String email;
 
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true ")
+    private boolean status;
+
     public Admin() {
     }
 
-    public Admin(int admin_id, String username, String password, String email) {
+    public Admin(int admin_id, String username, String password, String email, boolean status) {
         this.admin_id = admin_id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.status = status;
     }
 
     public int getAdmin_id() {
@@ -52,7 +56,7 @@ public class Admin {
     public String getPassword() {
         return password;
     }
-
+ 
     public void setPassword(String password) {
         this.password = password;
     }
@@ -64,4 +68,14 @@ public class Admin {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    
 }

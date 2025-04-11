@@ -30,7 +30,7 @@ public class AdminController {
     // Consultar todos los administradores
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
-        return new ResponseEntity<>(adminService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(adminService.findAll(), HttpStatus.OK); 
     }
 
     // Consultar un administrador por su ID
@@ -51,6 +51,22 @@ public class AdminController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
+        }   
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Object> filterAdmins(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Boolean status) {
+    
+        var adminList = adminService.filterAdmins(name, email, status);
+        return new ResponseEntity<>(adminList, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateAdmin(@PathVariable int id, @RequestBody AdminDTO dto) {
+            responseDTO respuesta = adminService.updateAdmin(id, dto);
+            return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 }
