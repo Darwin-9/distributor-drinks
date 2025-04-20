@@ -1,182 +1,392 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración | Líquidos Express</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <title>Admin</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-wine-bottle"></i>
-                <span>Líquidos<span>Express</span> Admin</span>
-            </a>
-            
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            
-            <ul class="nav-menu">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="admin.html" class="active"><i class="fas fa-boxes me-1"></i> Productos</a></li>
-                <li><a href="#"><i class="fas fa-truck me-1"></i> Camiones</a></li>
-                <li><a href="#"><i class="fas fa-users me-1"></i> Conductores</a></li>
-                <li><a href="#"><i class="fas fa-store me-1"></i> Tiendas</a></li>
-                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Contenido principal -->
-    <main class="admin-main">
-        <div class="container">
-            <div class="admin-header">
-                <h1><i class="fas fa-cocktail me-2"></i>Administración de Productos</h1>
-                <p>Gestiona el inventario de bebidas y líquidos</p>
-            </div>
-            
-            <div class="admin-actions">
-                <button id="btnNuevoProducto" class="btn btn-primary">
-                    <i class="fas fa-plus-circle me-2"></i>Nuevo Producto
-                </button>
-                
-                <div class="admin-search">
-                    <input type="text" placeholder="Buscar producto..." id="buscarProducto">
-                    <button class="btn btn-secondary" id="btnBuscar">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Mensajes de operación -->
-            <div id="mensajeOperacion" class="alert" style="display: none;"></div>
-            
-            <div class="table-responsive">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Volumen</th>
-                            <th>Stock</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaProductos">
-                        <tr>
-                            <td colspan="6" class="text-center py-4">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Cargando...</span>
-                                </div>
-                                <p class="mt-2">Cargando productos...</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Modal para eliminar producto -->
-            <div id="modalEliminar" class="modal">
-                <div class="modal-content" style="max-width: 500px;">
-                    <span class="close">&times;</span>
-                    <div class="modal-header">
-                        <h2>Confirmar Eliminación</h2>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Estás seguro de eliminar este producto?</p>
-                        <input type="hidden" id="productoIdEliminar">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="btnCancelarEliminar">Cancelar</button>
-                        <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="barraNav">
+            <div class="titulo">LiquidoXpress</div>
+            <div class="enlances">
+                <a href="index.html">Inicio</a>
+                <a href="productos.html">Productos</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="">Admin</a>
             </div>
         </div>
-    </main>
+</div>
 
-    <!-- Modal para crear/editar productos -->
-    <div id="modalProducto" class="modal">
+    <div class="admin-header">
+        <h2>Panel de Administrador</h2>
+        <p>Bienvenido al panel de administración. Aquí puedes gestionar los productos y el inventario.</p>
+    </div>
+
+    <div class="admin-buttons">
+        <button id="toggleDrinkForm">Gestión de Bebidas</button>
+        <button >Gestionar Conductores</button>
+        <button id="toggleTruckForm">Gestionar Camiones</button>
+        <button >Gestionar Tiendas</button>
+        <button >Gestionar UsuarioTienda</button>
+        <button id="toggleAdminForm">Gestionar Admin</button>
+        <button >Gestionar Orden</button>
+        <button >Gestionar Domicilio</button>
+        <button >Gestionar Inventario</button>
+        <button >Gestionar OrdenBebida</button>
+    </div>
+
+<!----------------------------------- GESTIONAR BEBIDAS ------------------------------------------->
+
+    <div id="drinkFormContainer" style="display: none;">
+        <div class="admin-panel">
+            <h3>Gestión de Bebidas</h3>
+    
+            <!-- Formulario de bebidas -->
+            <form id="drinkForm">
+                <label for="drinkName">Nombre del Producto:</label>
+                <input type="text" id="drinkName" required>
+    
+                <label for="drinkVolume">Volumen:</label>
+                <input type="text" id="drinkVolume" required>
+    
+                <label for="drinkPrice">Precio:</label>
+                <input type="number" id="drinkPrice" required>
+    
+                <label for="drinkStock">Stock:</label>
+                <input type="number" id="drinkStock" required>
+    
+                <button type="submit">Agregar Producto</button>
+            </form>
+            
+                 <!-- Barra de búsqueda -->
+                 <div class="search-bar">
+                    <input type="text" id="searchDrink" placeholder="Buscar bebida...">
+                    <button id="searchBtn">Buscar</button>
+                </div>
+
+
+                    <!-- Lista de bebidas -->
+                       <div class="list" id="drinkList">
+                            <h4>Lista de Bebidas</h4>
+                            <div id="drinkItems" data-id="">
+                                
+                                <!-- Aquí se cargarán dinámicamente las bebidas -->
+                                 <span></span>
+                            </div>
+                        </div>
+                        
+        </div>
+    </div>
+
+    <div id="updateModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-header">
-                <h2 id="tituloModal">Nuevo Producto</h2>
-            </div>
-            <form id="formProducto">
-                <input type="hidden" id="productoId">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="nombreProducto">Nombre del producto</label>
-                        <input type="text" id="nombreProducto" placeholder="Ej: Agua Mineral 500ml" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="precioProducto">Precio unitario</label>
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="number" id="precioProducto" placeholder="0.00" min="0" step="0.01" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="volumenProducto">Volumen</label>
-                        <div class="input-group">
-                            <input type="number" id="volumenProducto" placeholder="500" min="0" required>
-                            <span class="input-group-text">cm³</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="stockProducto">Cantidad en stock</label>
-                        <input type="number" id="stockProducto" placeholder="0" min="0" required>
-                    </div>
-                </div>
-                <button type="button" id="btnGuardarProducto" class="btn btn-primary w-100 mt-4">
-                    <i class="fas fa-save me-2"></i>Guardar Producto
+            <span class="close-btn" id="closeDrinkModal">&times;</span>
+            <h3>Actualizar Bebida</h3>
+            <!-- Elemento para mensajes -->
+            <div id="drink-message"></div>
+            
+            <form id="updateDrinkForm" class="modal-form">
+                <input type="hidden" id="updateDrinkId">
+                
+                <label for="updateDrinkName">Nombre del Producto:</label>
+                <input type="text" id="updateDrinkName" required>
+                
+                <label for="updateDrinkVolume">Volumen (ml):</label>
+                <input type="text" id="updateDrinkVolume" required>
+                
+                <label for="updateDrinkPrice">Precio ($):</label>
+                <input type="number" id="updateDrinkPrice" min="0" step="0.01" required>
+                
+                <label for="updateDrinkStock">Stock:</label>
+                <input type="number" id="updateDrinkStock" min="0" required>
+                
+                <button type="submit">
+                    <span class="btn-text">Guardar Cambios</span>
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>Líquidos Express Admin</h3>
-                    <p>Sistema de administración y gestión de inventario</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Enlaces</h3>
-                    <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="admin.html">Productos</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Soporte</h3>
-                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
-                    <p><i class="fas fa-envelope"></i> soporte@liquidasexpress.com</p>
-                </div>
+<!----------------------------------- GESTIONAR CAMIONES ------------------------------------------->
+
+<div id="truckFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Camiones</h3>
+
+        <!-- Formulario de camiones -->
+        <form id="truckForm">
+            <label for="truckModel">Modelo del Camion:</label>
+            <input type="text" id="truckModel" required>
+
+            <label for="truckPlate">Placa:</label>
+            <input type="text" id="truckPlate" required>
+
+            <label for="truckCapacity">Capacidad:</label>
+            <input type="number" id="truckCapacity" required>
+
+            <button type="submit">Agregar Camion</button>
+        </form>
+        
+             <!-- Barra de búsqueda -->
+             <div class="search-bar">
+                <input type="text" id="searchTruck" placeholder="Buscar camion...">
+                <button id="searchBtn1">Buscar</button>
             </div>
+
+
+                <!-- Lista de camiones -->
+                   <div class="list" id="truckList">
+                        <h4>Lista de Bebidas</h4>
+                        <div id="truckItems" data-id="">
+                            
+                            <!-- Aquí se cargarán dinámicamente las bebidas -->
+                             <span></span>
+                        </div>
+                    </div>
+                    
+    </div>
+</div>
+
+<div id="updateModal1" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeTruckModal">&times;</span>
+        <h3>Actualizar Camion</h3>
+        <!-- Elemento para mensajes -->
+        <div id="drink-message"></div>
+        
+        <form id="updateTruckForm" class="modal-form">
+            <input type="hidden" id="updateTruckId">
             
-            <div class="footer-bottom">
-                <p>&copy; 2023 Líquidos Express. Todos los derechos reservados.</p>
+            <label for="updateTruckModel">Modelo del Camion:</label>
+            <input type="text" id="updateTruckModel" required>
+
+            <label for="updateTruckPlate">Placa:</label>
+            <input type="text" id="updateTruckPlate" required>
+
+            <label for="updateTruckCapacity">Capacidad:</label>
+            <input type="text" id="updateTruckCapacity" required>
+            
+            <button type="submit">
+                <span class="btn-text">Guardar Cambios</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+    <!-- GESTIÓN DE ADMINISTRADORES -->
+<div id="adminFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Administradores</h3>
+
+        <!-- Formulario de administrador -->
+        <form id="adminForm">
+            <label for="adminName">Nombre:</label>
+            <input type="text" id="adminName" required>
+
+            <label for="adminEmail">Correo:</label>
+            <input type="text" id="adminEmail" required>
+
+            <label for="adminPassword">Contraseña:</label>
+            <input type="text" id="adminPassword" required>
+
+            <button type="submit">Agregar Administrador</button>
+        </form>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchAdmin" placeholder="Buscar admin...">
+            <button id="searchBtn2">Buscar</button>
+        </div>
+
+        <!-- Lista de administradores -->
+        <div class="list" id="adminList">
+            <h4>Lista de Administradores</h4>
+            <div id="adminItems" data-id="">
+                <!-- Aquí se cargarán dinámicamente los administradores -->
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR ADMIN -->
+<div id="updateAdminModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeAdminModal">&times;</span>
+        <h3>Actualizar Administrador</h3>
+        <form id="updateAdminForm" class="modal-form">
+            <input type="hidden" id="updateAdminId">
+
+            <label for="updateAdminName">Nombre:</label>
+            <input type="text" id="updateAdminName" required>
+
+            <label for="updateAdminEmail">Correo:</label>
+            <input type="text" id="updateAdminEmail" required>
+
+            <label for="updateAdminPassword">Contraseña:</label>
+            <input type="text" id="updateAdminPassword" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+<!----------------------------------- GESTIONAR TIENDAS ------------------------------------------->
+<div id="storeFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Tiendas</h3>
+
+        <!-- Formulario de tiendas -->
+        <form id="storeForm">
+            <label for="storeName">Nombre:</label>
+            <input type="text" id="storeName" required>
+
+            <label for="storeAddress">Dirección:</label>
+            <input type="text" id="storeAddress" required>
+
+            <label for="storePhone">Teléfono:</label>
+            <input type="number" id="storePhone" required>
+
+            <label for="storeCity">Ciudad:</label>
+            <input type="text" id="storeCity" required>
+
+            <button type="submit">Agregar Tienda</button>
+        </form>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchStore" placeholder="Buscar tienda...">
+            <button id="searchStoreBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de tiendas -->
+        <div class="list" id="storeList">
+            <h4>Lista de Tiendas</h4>
+            <div id="storeItems" data-id="">
+                <!-- Aquí se cargarán dinámicamente las tiendas -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR TIENDA -->
+<div id="updateStoreModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeStoreModal">&times;</span>
+        <h3>Actualizar Tienda</h3>
+        <form id="updateStoreForm" class="modal-form">
+            <input type="hidden" id="updateStoreId">
+
+            <label for="updateStoreName">Nombre:</label>
+            <input type="text" id="updateStoreName" required>
+
+            <label for="updateStoreAddress">Dirección:</label>
+            <input type="text" id="updateStoreAddress" required>
+
+            <label for="updateStorePhone">Teléfono:</label>
+            <input type="number" id="updateStorePhone" required>
+
+            <label for="updateStoreCity">Ciudad:</label>
+            <input type="text" id="updateStoreCity" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+
+<!----------------------------------- GESTIONAR USUARIOS DE TIENDA ------------------------------------------->
+<div id="storeUserFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Usuarios de Tienda</h3>
+
+        <!-- Formulario de usuarios de tienda -->
+        <!-- Formulario de usuarios de tienda -->
+        <form id="storeUserForm">
+            <label for="storeUserName">Nombre de usuario:</label>
+            <input type="text" id="storeUserName" minlength="3" maxlength="50" required>
+
+            <label for="storeUserEmail">Correo electrónico:</label>
+            <input type="email" id="storeUserEmail" required>
+
+            <label for="storeUserPassword">Contraseña:</label>
+            <input type="password" id="storeUserPassword" required>
+
+            <label for="storeUserStoreId">ID de Tienda:</label>
+            <select id="storeUserStoreId" required>
+                <option value="">Seleccione una tienda</option>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <button type="submit">Agregar Usuario</button>
+        </form>
+
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchStoreUser" placeholder="Buscar usuario...">
+            <button id="searchStoreUserBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de usuarios de tienda -->
+        <div class="list" id="storeUserList">
+            <h4>Lista de Usuarios</h4>
+            <div id="storeUserItems" data-id="">
+                <!-- Aquí se cargarán dinámicamente los usuarios -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR USUARIO DE TIENDA -->
+<!-- MODAL PARA ACTUALIZAR USUARIO DE TIENDA -->
+<div id="updateStoreUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeStoreUserModal">&times;</span>
+        <h3>Actualizar Usuario de Tienda</h3>
+        <form id="updateStoreUserForm" class="modal-form">
+            <input type="hidden" id="updateStoreUserId">
+
+            <label for="updateStoreUserName">Nombre de usuario:</label>
+            <input type="text" id="updateStoreUserName" minlength="3" maxlength="50" required>
+
+            <label for="updateStoreUserEmail">Correo electrónico:</label>
+            <input type="email" id="updateStoreUserEmail" required>
+
+            <label for="updateStoreUserStoreId">ID de Tienda:</label>
+            <select id="updateStoreUserStoreId" required>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sobre nosotros</h4>
+                <p>LiquidoXpress fue fundada en 2020 con la misión de revolucionar la distribución de líquidos para industrias y consumidores.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LiquidoXpress. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 para alertas bonitas -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Nuestro archivo JS -->
-    <script src="js/admin.js"></script>
+    <script type="module" src="js/constante.js"></script>
+    <script type="module" src="js/drinks.js"></script>
+    <script type="module" src="js/trucks.js"></script>
+    <script type="module" src="js/admins.js"></script>
+    <script type="module" src="js/stores.js"></script>
+    <script type="module" src="js/storeUsers.js"></script>
+
+    <script src="js/script.js"></script>
+    
 </body>
 </html>

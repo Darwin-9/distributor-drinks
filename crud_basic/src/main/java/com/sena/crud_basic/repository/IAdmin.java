@@ -11,16 +11,14 @@ import com.sena.crud_basic.model.Admin;
 public interface IAdmin extends JpaRepository<Admin, Integer> {
 
        
-    @Query("SELECT a FROM admin a WHERE a.status != false")
-    List<Admin> getListAdminActive();
+    @Query("SELECT a FROM admin a WHERE " +
+    "(:username IS NULL OR a.username LIKE CONCAT('%', :username, '%')) AND " +
+    "(:email IS NULL OR a.email LIKE CONCAT('%', :email, '%')) AND " +
+    "(:status IS NULL OR a.status = :status)")
+List<Admin> filterAdmins(@Param("username") String username,
+                      @Param("email") String email,
+                      @Param("status") Boolean status);
 
-   @Query("SELECT a FROM admin a " +
-       "WHERE (:username IS NULL OR a.username LIKE %:username%) " +
-       "OR (:email IS NULL OR a.email LIKE %:email%) " +
-       "OR (:status IS NULL OR a.status = :status)")
-List<Admin> filterAdmins(@Param("username") String name, 
-                                 @Param("email") String email, 
-                                 @Param("status") Boolean status);
 
     /*
      * C

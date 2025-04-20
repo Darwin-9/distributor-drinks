@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.sena.crud_basic.model.Order;
 
 import com.sena.crud_basic.DTO.OrderDTO;
 import com.sena.crud_basic.DTO.responseDTO;
@@ -43,14 +45,30 @@ public class OrderController {
         return new ResponseEntity<>(order.get(), HttpStatus.OK);
     }
 
-    // Eliminar un pedido por ID
+    // Eliminar
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = orderService.deleteUser(id);
-        if (message.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        responseDTO response = orderService.delete(id);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
+
+    // Actualizar
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody OrderDTO dto) {
+        responseDTO response = orderService.updateOrder(id, dto);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+    }
+
+
+    // Filtrar por fecha y status
+    @GetMapping("/filter")
+    public ResponseEntity<List<Order>> filterOrders(
+            @RequestParam(required = false) String order_date,
+            @RequestParam(required = false) Boolean status) {
+
+        List<Order> result = orderService.filterOrders(order_date, status);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 }

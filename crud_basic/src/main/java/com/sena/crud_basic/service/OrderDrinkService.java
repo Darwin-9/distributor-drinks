@@ -1,6 +1,6 @@
 package com.sena.crud_basic.service;
 
-import java.util.List;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +9,7 @@ import com.sena.crud_basic.DTO.OrderDrinkDTO;
 import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.model.OrderDrink;
 import com.sena.crud_basic.repository.IOrderDrink;
+import java.util.List;
 
 @Service
 public class OrderDrinkService {
@@ -47,6 +48,35 @@ public class OrderDrinkService {
         data.deleteById(id);
         return new responseDTO(HttpStatus.OK.toString(), "Detalle de pedido eliminado correctamente");
     }
+
+
+    public responseDTO update(int id, OrderDrinkDTO dto) {
+        // 1. Validar si el pedido existe
+        Optional<OrderDrink> orderDrinkOpt = findById(id);
+        if (!orderDrinkOpt.isPresent()) {
+            return new responseDTO(HttpStatus.NOT_FOUND.toString(), "El pedido de bebida con ID " + id + " no existe");
+        }
+    
+        // 2. Validar campos del DTO
+        if (dto.getQuantity() <= 0) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La cantidad debe ser mayor a 0");
+        }
+    
+        // 3. Actualizar los campos del pedido
+        OrderDrink existingOrderDrink = orderDrinkOpt.get();
+        existingOrderDrink.setQuantity(dto.getQuantity());
+        // Si hay más campos (ej: drink, order), actualízalos aquí
+    
+        // 4. Guardar cambios
+        data.save(existingOrderDrink);
+    
+        return new responseDTO(HttpStatus.OK.toString(), "Pedido de bebida actualizado correctamente");
+    }
+
+// En OrderDrinkService.java
+public List<OrderDrink> filterOrderDrinks(Integer quantity, Integer drinkId, Integer orderId) {
+    return data.filterOrderDrinks(quantity, drinkId, orderId);
+}
 
     // Método para convertir un modelo a un DTO
     public OrderDrinkDTO convertToDTO(OrderDrink orderDrink) {

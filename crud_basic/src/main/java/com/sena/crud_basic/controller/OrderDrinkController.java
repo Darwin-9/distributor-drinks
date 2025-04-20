@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.sena.crud_basic.model.OrderDrink;
 
 import com.sena.crud_basic.DTO.OrderDrinkDTO;
 import com.sena.crud_basic.DTO.responseDTO;
@@ -53,4 +55,27 @@ public class OrderDrinkController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/{id}")
+public ResponseEntity<responseDTO> update(
+        @PathVariable int id,
+        @RequestBody OrderDrinkDTO dto) {
+    
+    responseDTO response = orderDrinkService.update(id, dto);
+    if (response.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+}
+
+
+@GetMapping("/filter")
+public ResponseEntity<List<OrderDrink>> filterOrderDrinks(
+        @RequestParam(required = false) Integer quantity,
+        @RequestParam(required = false) Integer drinkId,
+        @RequestParam(required = false) Integer orderId) {
+
+    List<OrderDrink> result = orderDrinkService.filterOrderDrinks(quantity, drinkId, orderId);
+    return new ResponseEntity<>(result, HttpStatus.OK);
+}
 }

@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import com.sena.crud_basic.model.Admin;
 import com.sena.crud_basic.DTO.AdminDTO;
 import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.service.AdminService;
@@ -45,28 +47,31 @@ public class AdminController {
 
     // Eliminar un administrador por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = adminService.deleteUser(id);
-        if (message.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }   
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        responseDTO response = adminService.delete(id);
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<Object> filterAdmins(
-            @RequestParam(required = false) String name,
+    public ResponseEntity<List<Admin>> filterAdmins(
+            @RequestParam(required = false) String username,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) Boolean status) {
-    
-        var adminList = adminService.filterAdmins(name, email, status);
-        return new ResponseEntity<>(adminList, HttpStatus.OK);
+
+        List<Admin> result = adminService.filterAdmins(username, email, status);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateAdmin(@PathVariable int id, @RequestBody AdminDTO dto) {
-            responseDTO respuesta = adminService.updateAdmin(id, dto);
-            return new ResponseEntity<>(respuesta, HttpStatus.OK);
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody AdminDTO dto) {
+        responseDTO response = adminService.updateAdmin(id, dto);
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
 }

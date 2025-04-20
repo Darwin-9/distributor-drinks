@@ -14,13 +14,13 @@ public class Drink {
     @Column(name="drink_id")
     private int drink_id;
 
-    @Column(name="name", nullable=false, length=100)
+    @Column(name="name", length=100, nullable=false)
     private String name;
 
     @Column(name="price", nullable=false)
     private double price;
 
-    @Column(name="volume", nullable=false)
+    @Column(name="volume", nullable=false) 
     private double volume;
 
     @Column(name="stock", nullable=false) 

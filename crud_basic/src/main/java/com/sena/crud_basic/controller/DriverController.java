@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.sena.crud_basic.model.Driver;
 
 import com.sena.crud_basic.DTO.DriverDTO;
 import com.sena.crud_basic.DTO.responseDTO;
@@ -53,4 +55,31 @@ public class DriverController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @PutMapping("/{id}")
+public ResponseEntity<responseDTO> update(
+        @PathVariable int id,
+        @RequestBody DriverDTO dto) {
+    
+    responseDTO response = driverService.update(id, dto);
+    if (response.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+}
+
+
+
+@GetMapping("/filter")
+public ResponseEntity<List<Driver>> filterDrivers(
+        @RequestParam(required = false) String firstName,
+        @RequestParam(required = false) String lastName,
+        @RequestParam(required = false) String licenseNumber,
+        @RequestParam(required = false) Boolean status) {
+
+    List<Driver> result = driverService.filterDrivers(firstName, lastName, licenseNumber, status);
+    return new ResponseEntity<>(result, HttpStatus.OK);
+}
+
 }

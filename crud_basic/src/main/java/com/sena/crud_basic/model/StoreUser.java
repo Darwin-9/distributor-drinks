@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name="store_user")
 public class StoreUser {
@@ -25,7 +25,7 @@ public class StoreUser {
     @Column(name="email", nullable=false, length=100, unique=true)
     private String email;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="store_id", nullable=false, unique=true)
     private Store store;
 
@@ -84,7 +84,7 @@ public class StoreUser {
         this.store = store;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

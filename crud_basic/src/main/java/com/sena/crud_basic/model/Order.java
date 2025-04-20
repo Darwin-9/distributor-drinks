@@ -25,13 +25,14 @@ public class Order {
     @Column(name="order_date", nullable=false)
     private LocalDateTime order_date;
 
-    @Column(name="status", nullable=false, length=20)
-    private String status;
+    @Column(name="status", nullable=false, columnDefinition = "boolean default true ")
+    private boolean status;
+
 
     public Order() {
     }
 
-    public Order(int order_id, Store store, LocalDateTime order_date, String status) {
+    public Order(int order_id, Store store, LocalDateTime order_date, boolean status) {
         this.order_id = order_id;
         this.store = store;
         this.order_date = order_date;
@@ -62,11 +63,11 @@ public class Order {
         this.order_date = order_date;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

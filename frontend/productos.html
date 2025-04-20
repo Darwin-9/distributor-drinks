@@ -3,188 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Productos | Líquidos Express</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/productos.css">
+    <title>LiquidoXpress - Soluciones de Entrega</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Barra de navegación mejorada -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-wine-bottle"></i>
-                <span>Líquidos<span class="highlight">Express</span></span>
-            </a>
-            
-            <button class="menu-toggle" aria-label="Menú">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="nav-menu">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="productos.html" class="active">Productos</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="tienda.html" class="btn btn-store">Acceso Tiendas</a></li>
-                <li><a href="admin.html" class="btn btn-admin"><i class="fas fa-lock"></i> Admin</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero section para productos -->
-    <section class="product-hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Descubre Nuestro Catálogo</h1>
-                <p class="subtitle">Las mejores bebidas para tu negocio</p>
-                <div class="hero-search">
-                    <input type="text" placeholder="Buscar productos..." id="hero-search">
-                    <button class="btn btn-search"><i class="fas fa-search"></i></button>
-                </div>
+    <div class="container">
+        <div class="barraNav">
+            <div class="titulo">LiquidoXpress</div>
+            <div class="enlances">
+                <a href="index.html">Inicio</a>
+                <a href="productos.html">Productos</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="admin.html">Admin</a>
             </div>
         </div>
-    </section>
+        
+    </div>
 
-    <!-- Contenido principal -->
-    <main class="product-main">
-        <div class="container">
-            <!-- Filtros mejorados -->
-            <div class="product-filters">
-                <div class="filter-group">
-                    <label for="category-filter">Categoría:</label>
-                    <select id="category-filter" class="filter-select">
-                        <option value="">Todas las categorías</option>
-                        <option value="agua">Aguas Minerales</option>
-                        <option value="energetica">Bebidas Energéticas</option>
-                        <option value="refresco">Refrescos</option>
-                        <option value="jugo">Jugos Naturales</option>
-                        <option value="isotonicas">Bebidas Isotónicas</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="price-filter">Precio:</label>
-                    <select id="price-filter" class="filter-select">
-                        <option value="">Todos los precios</option>
-                        <option value="0-20">$0 - $20</option>
-                        <option value="20-50">$20 - $50</option>
-                        <option value="50-100">$50 - $100</option>
-                        <option value="100+">Más de $100</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="sort-by">Ordenar por:</label>
-                    <select id="sort-by" class="filter-select">
-                        <option value="popular">Más populares</option>
-                        <option value="price-asc">Precio: menor a mayor</option>
-                        <option value="price-desc">Precio: mayor a menor</option>
-                        <option value="newest">Más recientes</option>
-                    </select>
-                </div>
-                
-                <button class="btn btn-filter-reset">Limpiar filtros</button>
-            </div>
-            
-            <!-- Resultados de búsqueda -->
-            <div class="product-results">
-                <div class="results-header">
-                    <h2>Nuestros Productos</h2>
-                    <div class="results-count">Mostrando <span id="product-count">12</span> de <span id="total-products">45</span> productos</div>
-                </div>
-                
-                <!-- Grid de productos -->
-                <div class="products-grid" id="products-grid">
-                    <!-- Tarjeta de producto de ejemplo -->
-                    <article class="product-card">
-                        <div class="product-badge">Nuevo</div>
-                        <div class="product-image">
-                            <img src="img/products/agua-mineral.jpg" alt="Agua Mineral Premium" loading="lazy">
-                            <button class="btn-quick-view">Vista rápida</button>
-                        </div>
-                        <div class="product-info">
-                            <span class="product-category">Agua Mineral</span>
-                            <h3 class="product-title">Agua Mineral Premium 500ml</h3>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="rating-count">(24)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="current-price">$15.50</span>
-                                <span class="original-price">$18.00</span>
-                            </div>
-                            <div class="product-stock">
-                                <i class="fas fa-check-circle"></i> Disponible: <span>25 unidades</span>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <i class="fas fa-cart-plus"></i> Añadir al carrito
-                            </button>
-                        </div>
-                    </article>
-                    
-                    <!-- Más productos se cargarían dinámicamente -->
-                </div>
-                
-                
-            </div>
-        </div>
-    </main>
-
+    <!-- 🔹 Barra de búsqueda - debe estar FUERA del contenedor de productos -->
+<div class="busqueda">
+    <input type="text" id="buscarInput" placeholder="Buscar bebida por nombre...">
+  </div>
+  
+  <!-- 🔹 Productos -->
+  <div class="productos" id="contenedorProductos">
+    <div class="producto">
+      <img src="img/agua.jpg" alt="Agua Mineral">
+      <h3>Agua Mineral</h3>
+      <p>Volumen: 500ml</p>
+      <p>Precio: $2.500 COP</p>
+      <p>Stock: 30 unidades</p>
+    </div>
+  
+    <div class="producto">
+      <img src="img/jugo.jpg" alt="Jugo de Naranja">
+      <h3>Jugo de Naranja</h3>
+      <p>Volumen: 1L</p>
+      <p>Precio: $4.200 COP</p>
+      <p>Stock: 15 unidades</p>
+    </div>
+  </div>
   
 
-    <!-- Footer mejorado -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Líquidos Express</h4>
-                    <p>Distribuidora líder de bebidas con la mejor selección para tu negocio.</p>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Enlaces</h4>
-                    <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="productos.html">Productos</a></li>
-                        <li><a href="nosotros.html">Nosotros</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Contacto</h4>
-                    <ul class="contact-info">
-                        
-                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-                        <li><i class="fas fa-envelope"></i> info@liquidosexpress.com</li>
-                        
-                    </ul>
-                </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sobre nosotros</h4>
+                <p>LiquidoXpress fue fundada en 2020 con la misión de revolucionar la distribución de líquidos para industrias y consumidores.</p>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Líquidos Express. Todos los derechos reservados.</p>
-                <div class="legal-links">
-                    <a href="#">Términos y condiciones</a>
-                    <a href="#">Política de privacidad</a>
-                </div>
-            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LiquidoXpress. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Modal de vista rápida -->
-    <div class="quickview-modal" id="quickview-modal">
-        <div class="quickview-content">
-            <button class="quickview-close">&times;</button>
-            <div class="quickview-container" id="quickview-container">
-                <!-- Contenido cargado dinámicamente -->
-            </div>
-        </div>
-    </div>
-
-    <script src="js/productos.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

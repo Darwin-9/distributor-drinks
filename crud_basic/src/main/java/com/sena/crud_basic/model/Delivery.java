@@ -34,15 +34,19 @@ public class Delivery {
     @Column(name="delivery_date", nullable=false)
     private LocalDateTime delivery_date;
 
+    @Column(name="status", nullable=false, columnDefinition = "boolean default true")
+    private boolean status;
+
     public Delivery() {
     }
 
-    public Delivery(int delivery_id, Order order, Truck truck, Driver driver, LocalDateTime delivery_date) {
+    public Delivery(int delivery_id, Order order, Truck truck, Driver driver, LocalDateTime delivery_date, boolean status) {
         this.delivery_id = delivery_id;
         this.order = order;
         this.truck = truck;
         this.driver = driver;
         this.delivery_date = delivery_date;
+        this.status = status;
     }
 
     public int getDelivery_id() {
@@ -83,5 +87,13 @@ public class Delivery {
 
     public void setDelivery_date(LocalDateTime delivery_date) {
         this.delivery_date = delivery_date;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

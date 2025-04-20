@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.sena.crud_basic.model.StoreUser;
 
 import com.sena.crud_basic.DTO.StoreUserDTO;
 import com.sena.crud_basic.DTO.responseDTO;
@@ -43,14 +45,37 @@ public class StoreUserController {
         return new ResponseEntity<>(storeUser.get(), HttpStatus.OK);
     }
 
-    // Eliminar un usuario de tienda por ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable int id) {
-        responseDTO message = storeUserService.deleteUser(id);
-        if (message.getStatus().equals(HttpStatus.OK.toString())) {
-            return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-    }
+   // Eliminar
+   @DeleteMapping("/{id}")
+   public ResponseEntity<Object> delete(@PathVariable int id) {
+       responseDTO response = storeUserService.delete(id);
+       if (response.getStatus().equals(HttpStatus.OK.toString())) {
+           return new ResponseEntity<>(response, HttpStatus.OK);
+       }
+       return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+   }
+
+   // Filtro
+   @GetMapping("/filter")
+   public ResponseEntity<List<StoreUser>> filterStoreUsers(
+           @RequestParam(required = false) String username,
+           @RequestParam(required = false) String email,
+           @RequestParam(required = false) Boolean status) {
+
+       List<StoreUser> result = storeUserService.filterStoreUsers(username, email, status);
+       return new ResponseEntity<>(result, HttpStatus.OK);
+       
+   }
+
+   
+   // Actualizar
+   @PutMapping("/{id}")
+   public ResponseEntity<Object> update(@PathVariable int id, @RequestBody StoreUserDTO dto) {
+       responseDTO response = storeUserService.updateStoreUser(id, dto);
+       if (response.getStatus().equals(HttpStatus.OK.toString())) {
+           return new ResponseEntity<>(response, HttpStatus.OK);
+       }
+       return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+   }
+
 }

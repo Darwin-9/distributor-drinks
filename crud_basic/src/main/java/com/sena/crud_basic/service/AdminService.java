@@ -42,15 +42,52 @@ public class AdminService {
         return data.findById(id);
     }
 
+    
+
     // Método para eliminar un administrador por ID
-    public responseDTO deleteUser(int id) {
+    public responseDTO delete(int id) {
         Optional<Admin> admin = findById(id);
         if (!admin.isPresent()) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El administrador no existe");
         }
-        data.deleteById(id);
+    
+        admin.get().setStatus(false); // Eliminación lógica
+        data.save(admin.get());
+    
         return new responseDTO(HttpStatus.OK.toString(), "Administrador eliminado correctamente");
     }
+
+
+    public responseDTO update(int id, AdminDTO dto) {
+        Optional<Admin> adminOpt = data.findById(id);
+        if (!adminOpt.isPresent()) {
+            return new responseDTO(HttpStatus.NOT_FOUND.toString(), "El administrador con ID " + id + " no existe");
+        }
+    
+        if (dto.getUsername() == null || dto.getUsername().length() < 3 || dto.getUsername().length() > 50) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre de usuario debe tener entre 3 y 50 caracteres");
+        }
+    
+        if (!isValidEmail(dto.getEmail())) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El correo electrónico no tiene un formato válido");
+        }
+    
+        Admin existingAdmin = adminOpt.get();
+        existingAdmin.setUsername(dto.getUsername());
+        existingAdmin.setEmail(dto.getEmail());
+        existingAdmin.setPassword(dto.getPassword());
+    
+        data.save(existingAdmin);
+    
+        return new responseDTO(HttpStatus.OK.toString(), "Administrador actualizado correctamente");
+    }
+
+    public List<Admin> filterAdmins(String username, String email, Boolean status) {
+        return data.filterAdmins(username, email, status);
+    }
+    
+    
+    
 
     // Método para convertir un modelo a un DTO
     public AdminDTO convertToDTO(Admin admin) {
@@ -90,8 +127,5 @@ public class AdminService {
         return respuesta;
     }
 
-    public List<Admin> filterAdmins(String name, String email, Boolean status) {
-        return data.filterAdmins(name, email, status);
-    }
 
 }

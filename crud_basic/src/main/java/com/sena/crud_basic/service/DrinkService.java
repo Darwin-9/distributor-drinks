@@ -54,13 +54,16 @@ public class DrinkService {
         return data.findAll();
     }
 
+
     // Método para buscar una bebida por ID
     public Optional<Drink> findById(int id) {
         return data.findById(id);
     }
 
+
+
     // Método para eliminar una bebida por ID
-    public responseDTO deleteUser(int id) {
+    public responseDTO delete(int id) {
         Optional<Drink> drink = findById(id);
         if (!drink.isPresent()) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La bebida no existe");
@@ -68,6 +71,12 @@ public class DrinkService {
         data.deleteById(id);
         return new responseDTO(HttpStatus.OK.toString(), "Bebida eliminada correctamente");
     }
+
+
+    public List<Drink> filterDrinks(Integer id, String name, Double price, Double volume, Integer stock) {
+        return data.filterDrinks(id, name, price, volume, stock);
+    }
+
 
     // Método para convertir un modelo a un DTO
     public DrinkDTO convertToDTO(Drink drink) {
@@ -79,13 +88,36 @@ public class DrinkService {
         return new Drink(0, drinkDTO.getName(), drinkDTO.getPrice(), drinkDTO.getVolume(), drinkDTO.getStock());
     }
 
-    public responseDTO update(DrinkDTO drinkDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+    public responseDTO update(DrinkDTO drinkDTO, int id) {
+        // buscar la bebida por ID
+        Optional<Drink> drinkOptional = findById(id);
+        if (!drinkOptional.isPresent()) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La bebida no existe");
+        }
 
-    public responseDTO deleteDrink(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteDrink'");
-    }
+        if (drinkDTO.getName() == null || drinkDTO.getName().trim().isEmpty()) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre no puede estar vacío");
+        }
+        if (drinkDTO.getName().length() < 1 || drinkDTO.getName().length() > 100) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre debe tener entre 1 y 100 caracteres");
+        }
+
+        if (drinkDTO.getPrice() <=0) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El precio debe ser mayor a 0");
+        }
+        if (drinkDTO.getVolume() <=0 || drinkDTO.getVolume() > 10000) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El volumen debe estar entre 0.1 ml y 10,000 ml");
+        }
+        if (drinkDTO.getStock() <=0) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El stock no puede ser negativo");
+        }
+        // Actualizar la bebida si todas las validaciones pasan
+        Drink drink = drinkOptional.get();
+        drink.setName(drinkDTO.getName());
+        drink.setPrice(drinkDTO.getPrice());
+        drink.setVolume(drinkDTO.getVolume());
+        drink.setStock(drinkDTO.getStock());
+        data.save(drink);
+        return new responseDTO(HttpStatus.OK.toString(), "Bebida actualizada exitosamente");
+    } 
 }

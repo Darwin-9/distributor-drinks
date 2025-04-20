@@ -12,7 +12,7 @@ import com.sena.crud_basic.model.Truck;
 import com.sena.crud_basic.repository.IDriver;
 import com.sena.crud_basic.repository.ITruck;
 
-@Service
+@Service 
 public class DriverService {
 
     @Autowired
@@ -68,7 +68,47 @@ public class DriverService {
         
     }
 
+    public responseDTO update(int id, DriverDTO dto) {
+        // 1. Validar si el conductor existe
+        Optional<Driver> driverOpt = findById(id);
+        if (!driverOpt.isPresent()) {
+            return new responseDTO(HttpStatus.NOT_FOUND.toString(), "El conductor con ID " + id + " no existe");
+        }
+    
+        // 2. Validar campos del DTO
+        if (dto.getFirst_name() == null || dto.getFirst_name().length() < 1 || dto.getFirst_name().length() > 50) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre debe tener entre 1 y 50 caracteres");
+        }
+    
+        if (dto.getLast_name() == null || dto.getLast_name().length() < 1 || dto.getLast_name().length() > 50) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El apellido debe tener entre 1 y 50 caracteres");
+        }
+    
+        if (dto.getLicense_number() == null || dto.getLicense_number().length() < 5 || dto.getLicense_number().length() > 20) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El número de licencia debe tener entre 5 y 20 caracteres");
+        }
+    
+        // 3. Obtener el camión asociado (si se actualiza truck_id)
+        Truck truck = truckRepository.findById(dto.getTruck_id())
+                .orElseThrow(() -> new RuntimeException("Camión no encontrado"));
+    
+        // 4. Actualizar los campos del conductor
+        Driver existingDriver = driverOpt.get();
+        existingDriver.setFirst_name(dto.getFirst_name());
+        existingDriver.setLast_name(dto.getLast_name());
+        existingDriver.setLicense_number(dto.getLicense_number());
+        existingDriver.setTruck(truck); // Actualizar el camión si es necesario
+    
+        // 5. Guardar cambios
+        data.save(existingDriver);
+    
+        return new responseDTO(HttpStatus.OK.toString(), "Conductor actualizado correctamente");
+    }
 
+
+public List<Driver> filterDrivers(String firstName, String lastName, String licenseNumber, Boolean status) {
+    return data.filterDrivers(firstName, lastName, licenseNumber, status);
+}
 
 
     // Método para convertir un modelo a un DTO

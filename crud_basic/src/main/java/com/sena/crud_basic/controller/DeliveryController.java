@@ -5,6 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+import com.sena.crud_basic.model.Delivery;
+
 import com.sena.crud_basic.DTO.DeliveryDTO;
 import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.service.DeliveryService;
@@ -53,4 +57,29 @@ public class DeliveryController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
+
+    
+    // Filtrar entregas por fecha y estado
+    @GetMapping("/filter")
+    public ResponseEntity<List<Delivery>> filterDeliveries(
+            @RequestParam(required = false) LocalDate deliveryDate,
+            @RequestParam(required = false) Boolean status) {
+
+        List<Delivery> result = deliveryService.filterDeliveries(deliveryDate, status);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // En DeliveryController.java
+@PutMapping("/{id}")
+public ResponseEntity<responseDTO> update(
+        @PathVariable int id,
+        @RequestBody DeliveryDTO dto) {
+    
+    responseDTO response = deliveryService.update(id, dto);
+    if (response.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+}
+
 }

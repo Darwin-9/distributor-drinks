@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class OrderDTO {
 
     private LocalDateTime order_date;
-    private String status;
+    private boolean status;
 
-    public OrderDTO(LocalDateTime order_date, String status) {
+    public OrderDTO(LocalDateTime order_date, boolean status) {
         this.order_date = order_date;
         this.status = status;
     }
@@ -20,11 +20,11 @@ public class OrderDTO {
         this.order_date = order_date;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import com.sena.crud_basic.DTO.InventoryDTO;
 import com.sena.crud_basic.DTO.responseDTO;
+import com.sena.crud_basic.model.Inventory;
 import com.sena.crud_basic.service.InventoryService;
 
 @RestController
@@ -53,4 +55,20 @@ public class InventoryController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody InventoryDTO dto) {
+        responseDTO response = inventoryService.update(id, dto);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Inventory>> filterInventory(
+            @RequestParam(required = false) String last_update,
+            @RequestParam(required = false) Integer current_stock) {
+
+        List<Inventory> result = inventoryService.filterInventory(last_update, current_stock);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

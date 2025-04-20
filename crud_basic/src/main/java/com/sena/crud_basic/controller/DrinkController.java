@@ -2,11 +2,15 @@ package com.sena.crud_basic.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.sena.crud_basic.DTO.DrinkDTO;
 import com.sena.crud_basic.DTO.responseDTO;
+import com.sena.crud_basic.model.Drink; 
 import com.sena.crud_basic.service.DrinkService;
 
 @RestController
@@ -15,6 +19,10 @@ public class DrinkController {
 
     @Autowired
     private DrinkService drinkService;
+
+
+
+
 
     // Registrar una nueva bebida con validaciones
     @PostMapping("/")
@@ -26,6 +34,9 @@ public class DrinkController {
             return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+
 
     // Consultar todas las bebidas
     @GetMapping("/")
@@ -43,10 +54,12 @@ public class DrinkController {
         return new ResponseEntity<>(drink.get(), HttpStatus.OK);
     }
 
+
+
     // Eliminar una bebida por ID
     @DeleteMapping("/{id}")
 public ResponseEntity<Object> deleteById(@PathVariable int id) {
-    responseDTO message = drinkService.deleteDrink(id); // Cambiar deleteUser por deleteDrink
+    responseDTO message = drinkService.delete(id); 
     if (message.getStatus().equals(HttpStatus.OK.toString())) {
         return new ResponseEntity<>(message, HttpStatus.OK);
     } else {
@@ -54,14 +67,29 @@ public ResponseEntity<Object> deleteById(@PathVariable int id) {
     }
 }
 
-@PutMapping("/")
-public ResponseEntity<Object> update(@RequestBody DrinkDTO drinkDTO) {
-    responseDTO respuesta = drinkService.update(drinkDTO);
-    if (respuesta.getStatus().equals(HttpStatus.OK.toString())) {
-        return new ResponseEntity<>(respuesta, HttpStatus.OK);
+// filtrar
+@GetMapping("/filter")
+public ResponseEntity<List<Drink>> filterDrinks(
+        @RequestParam(required = false) Integer id,
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) Double price,
+        @RequestParam(required = false) Double volume,
+        @RequestParam(required = false) Integer stock) {
+
+    List<Drink> drinks = drinkService.filterDrinks(id, name, price, volume, stock);
+    return new ResponseEntity<>(drinks, HttpStatus.OK);
+}
+
+// Actualizar una bebida por ID
+@PutMapping("/{id}")
+public ResponseEntity<Object> updateDrink(@PathVariable int id, @RequestBody DrinkDTO drinkDTO) {
+    responseDTO message = drinkService.update(drinkDTO, id);
+    if (message.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(message, HttpStatus.OK);
     } else {
-        return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
+
 
 }

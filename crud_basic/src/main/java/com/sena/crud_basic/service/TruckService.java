@@ -14,7 +14,7 @@ import com.sena.crud_basic.repository.ITruck;
 public class TruckService {
 
     @Autowired
-    private ITruck data;
+    private ITruck data; 
 
     // Método para guardar un camión con validaciones
     public responseDTO save(TruckDTO truckDTO) {
@@ -57,6 +57,39 @@ public class TruckService {
             HttpStatus.OK.toString(),
             "Camion eliminado correctamente");
     }
+
+
+    public List<Truck> filterTrucks(Integer id, String model, Double capacity, String plateNumber) {
+        return data.filterTrucks(id, model, capacity, plateNumber);
+    }
+    
+
+    public responseDTO update(TruckDTO truckDTO, int id) {
+        Optional<Truck> truckOptional = findById(id);
+        if (!truckOptional.isPresent()) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El camión no existe");
+        }
+    
+        if (truckDTO.getModel() == null || truckDTO.getModel().trim().isEmpty()) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El modelo no puede estar vacío");
+        }
+        if (truckDTO.getModel().length() < 1 || truckDTO.getModel().length() > 50) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El modelo debe tener entre 1 y 50 caracteres");
+        }
+    
+        if (truckDTO.getCapacity() <= 0) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La capacidad debe ser mayor a 0");
+        }
+    
+        Truck truck = truckOptional.get();
+        truck.setModel(truckDTO.getModel());
+        truck.setCapacity(truckDTO.getCapacity());
+        truck.setPlate_number(truckDTO.getPlate_number());
+        data.save(truck);
+    
+        return new responseDTO(HttpStatus.OK.toString(), "Camión actualizado exitosamente");
+    }
+    
 
     // Método para convertir un modelo a un DTO
     public TruckDTO convertToDTO(Truck truck) {
