@@ -366,6 +366,211 @@
     </div>
 </div>
 
+<!----------------------------------- GESTIONAR CONDUCTORES ------------------------------------------->
+<div id="driverFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Conductores</h3>
+
+        <!-- Formulario de conductores -->
+        <form id="driverForm">
+            <label for="driverFirstName">Nombre:</label>
+            <input type="text" id="driverFirstName" minlength="1" maxlength="50" required>
+
+            <label for="driverLastName">Apellido:</label>
+            <input type="text" id="driverLastName" minlength="1" maxlength="50" required>
+
+            <label for="driverLicense">Número de Licencia:</label>
+            <input type="text" id="driverLicense" minlength="5" maxlength="20" required>
+
+            <label for="driverTruckId">Camión Asignado:</label>
+            <select id="driverTruckId" required>
+                <option value="">Seleccione un camión</option>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <button type="submit">Agregar Conductor</button>
+        </form>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchDriver" placeholder="Buscar conductor...">
+            <button id="searchDriverBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de conductores -->
+        <div class="list" id="driverList">
+            <h4>Lista de Conductores</h4>
+            <div id="driverItems" data-id="">
+                <!-- Aquí se cargarán dinámicamente los conductores -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR CONDUCTOR -->
+<div id="updateDriverModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeDriverModal">&times;</span>
+        <h3>Actualizar Conductor</h3>
+        <form id="updateDriverForm" class="modal-form">
+            <input type="hidden" id="updateDriverId">
+
+            <label for="updateDriverFirstName">Nombre:</label>
+            <input type="text" id="updateDriverFirstName" minlength="1" maxlength="50" required>
+
+            <label for="updateDriverLastName">Apellido:</label>
+            <input type="text" id="updateDriverLastName" minlength="1" maxlength="50" required>
+
+            <label for="updateDriverLicense">Número de Licencia:</label>
+            <input type="text" id="updateDriverLicense" minlength="5" maxlength="20" required>
+
+            <label for="updateDriverTruckId">Camión Asignado:</label>
+            <select id="updateDriverTruckId" required>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+<!----------------------------------- GESTIONAR ORDENES ------------------------------------------->
+<div id="orderFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Órdenes</h3>
+
+        <!-- Formulario de órdenes -->
+        <form id="orderForm">
+            <label for="orderStoreId">Tienda:</label>
+            <select id="orderStoreId" required>
+                <option value="">Seleccione una tienda</option>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <label for="orderDate">Fecha y Hora:</label>
+            <input type="datetime-local" id="orderDate" required>
+
+            <button type="submit">Crear Orden</button>
+        </form>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchOrder" placeholder="Buscar orden o 'inactivos'...">
+            <button id="searchOrderBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de órdenes -->
+        <div class="list" id="orderList">
+            <h4>Lista de Órdenes</h4>
+            <div id="orderItems" data-id="">
+                <!-- Aquí se cargarán dinámicamente las órdenes -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR ORDEN -->
+<div id="updateOrderModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeOrderModal">&times;</span>
+        <h3>Actualizar Orden</h3>
+        <form id="updateOrderForm" class="modal-form">
+            <input type="hidden" id="updateOrderId">
+
+            <label for="updateOrderStoreId">Tienda:</label>
+            <select id="updateOrderStoreId" required>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <label for="updateOrderDate">Fecha y Hora:</label>
+            <input type="datetime-local" id="updateOrderDate" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+<!----------------------------------- GESTIONAR ENTREGAS ------------------------------------------->
+<div id="deliveryFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Entregas</h3>
+
+        <!-- Formulario de entregas -->
+        <form id="deliveryForm">
+            <label for="deliveryOrderId">Orden:</label>
+            <select id="deliveryOrderId" required>
+                <option value="">Seleccione una orden</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="deliveryTruckId">Camión:</label>
+            <select id="deliveryTruckId" required>
+                <option value="">Seleccione un camión</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="deliveryDriverId">Conductor:</label>
+            <select id="deliveryDriverId" required>
+                <option value="">Seleccione un conductor</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="deliveryDate">Fecha de Entrega:</label>
+            <input type="datetime-local" id="deliveryDate" required>
+
+            <button type="submit">Registrar Entrega</button>
+        </form>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchDelivery" placeholder="Buscar entrega o 'inactivos'...">
+            <button id="searchDeliveryBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de entregas -->
+        <div class="list" id="deliveryList">
+            <h4>Lista de Entregas</h4>
+            <div id="deliveryItems">
+                <!-- Aquí se cargarán dinámicamente las entregas -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR ENTREGA -->
+<div id="updateDeliveryModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeDeliveryModal">&times;</span>
+        <h3>Actualizar Entrega</h3>
+        <form id="updateDeliveryForm" class="modal-form">
+            <input type="hidden" id="updateDeliveryId">
+
+            <label for="updateDeliveryOrderId">Orden:</label>
+            <select id="updateDeliveryOrderId" required>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="updateDeliveryTruckId">Camión:</label>
+            <select id="updateDeliveryTruckId" required>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="updateDeliveryDriverId">Conductor:</label>
+            <select id="updateDeliveryDriverId" required>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="updateDeliveryDate">Fecha de Entrega:</label>
+            <input type="datetime-local" id="updateDeliveryDate" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+
 
     <footer>
         <div class="footer-content">
@@ -385,6 +590,9 @@
     <script type="module" src="js/admins.js"></script>
     <script type="module" src="js/stores.js"></script>
     <script type="module" src="js/storeUsers.js"></script>
+    <script type="module" src="js/drivers.js"></script>
+    <script type="module" src="js/orders.js"></script>
+    <script type="module" src="js/deliveries.js"></script>
 
     <script src="js/script.js"></script>
     

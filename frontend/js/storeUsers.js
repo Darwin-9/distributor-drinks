@@ -1,7 +1,7 @@
 import { urlBase } from './constante.js';
 
 let urlStoreUsers = `${urlBase}store-users/`;
-let urlStores = `${urlBase}stores/`; // Nueva URL para obtener las tiendas
+let urlStores = `${urlBase}stores/`;
 
 // Función para cargar las tiendas en los select
 async function cargarTiendas() {
@@ -120,11 +120,9 @@ document.getElementById("updateStoreUserForm").addEventListener("submit", async 
     }
 });
 
-
-
-// Buscar usuarios de tienda - Versión corregida
+// Buscar usuarios de tienda
 document.getElementById("searchStoreUserBtn").addEventListener("click", async (e) => {
-    e.preventDefault(); // Prevenir comportamiento por defecto
+    e.preventDefault();
     const searchTerm = document.getElementById("searchStoreUser").value.trim();
     await buscarStoreUsers(searchTerm, "");
 });
@@ -185,7 +183,7 @@ async function buscarStoreUsers(username, email) {
     }
 }
 
-// Modificar el evento click para el modal de actualización
+// Manejar clic en botón actualizar
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('update-store-user-btn')) {
         const btn = e.target;
@@ -203,5 +201,37 @@ document.addEventListener('click', function(e) {
         storeSelect.value = storeId;
 
         document.getElementById("updateStoreUserModal").style.display = "block";
+    }
+});
+
+// Eliminar usuario de tienda
+document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("delete-store-user-btn")) {
+        const userId = e.target.dataset.id;
+
+        const confirmDelete = confirm("¿Estás seguro de que deseas eliminar este usuario de tienda?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`${urlStoreUsers}${userId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(result.message || "Usuario eliminado correctamente.");
+                document.getElementById("searchStoreUserBtn").click(); // Refrescar lista
+            } else {
+                const errorData = await response.json().catch(() => null);
+                const errorMsg = errorData?.message || `Error ${response.status}`;
+                alert(errorMsg);
+            }
+        } catch (error) {
+            console.error("Error al eliminar usuario:", error);
+            alert("Hubo un error al eliminar el usuario.");
+        }
     }
 });

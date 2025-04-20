@@ -4,6 +4,9 @@ function ocultarTodosLosFormularios() {
     document.getElementById("adminFormContainer").style.display = "none";
     document.getElementById("storeFormContainer").style.display = "none";
     document.getElementById("storeUserFormContainer").style.display = "none";
+    document.getElementById("driverFormContainer").style.display = "none";
+    document.getElementById("orderFormContainer").style.display = "none";
+    document.getElementById("deliveryFormContainer").style.display = "none";
 
 }
 
@@ -46,6 +49,34 @@ document.querySelector("button:nth-child(5)").addEventListener("click", () => {
     ocultarTodosLosFormularios();
     formContainer.style.display = isVisible ? "none" : "block";
 });
+
+
+document.querySelector("button:nth-child(2)").addEventListener("click", () => {
+  const formContainer = document.getElementById("driverFormContainer");
+  const isVisible = formContainer.style.display === "block";
+
+  ocultarTodosLosFormularios();
+  formContainer.style.display = isVisible ? "none" : "block";
+});
+
+document.querySelector("button:nth-child(7)").addEventListener("click", () => {
+  const formContainer = document.getElementById("orderFormContainer");
+  const isVisible = formContainer.style.display === "block";
+
+  ocultarTodosLosFormularios();
+  formContainer.style.display = isVisible ? "none" : "block";
+});
+
+
+document.querySelector("button:nth-child(8)").addEventListener("click", () => {
+  const formContainer = document.getElementById("deliveryFormContainer");
+  const isVisible = formContainer.style.display === "block";
+
+  ocultarTodosLosFormularios();
+  formContainer.style.display = isVisible ? "none" : "block";
+});
+
+
 
 
 // Abrir modal
@@ -133,6 +164,48 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// Manejar clic en botón actualizar
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('update-driver-btn')) {
+      const btn = e.target;
+      const driverId = btn.getAttribute('data-id');
+      
+      document.getElementById('updateDriverId').value = driverId;
+      document.getElementById('updateDriverModal').dataset.currentId = driverId;
+
+      document.getElementById("updateDriverFirstName").value = btn.dataset.firstName;
+      document.getElementById("updateDriverLastName").value = btn.dataset.lastName;
+      document.getElementById("updateDriverLicense").value = btn.dataset.license;
+      
+      // Seleccionar el camión correcto en el select
+      const truckId = btn.dataset.truckId;
+      const truckSelect = document.getElementById("updateDriverTruckId");
+      truckSelect.value = truckId;
+
+      // Agregar control para el estado
+      const statusCheckbox = document.getElementById("updateDriverStatus");
+      if (statusCheckbox) {
+          statusCheckbox.checked = btn.dataset.status === "true";
+      }
+
+      document.getElementById("updateDriverModal").style.display = "block";
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('update-order-btn')) {
+      const btn = e.target;
+      const orderId = btn.getAttribute('data-id');
+      
+      document.getElementById('updateOrderId').value = orderId;
+      document.getElementById('updateOrderModal').dataset.currentId = orderId;
+
+      document.getElementById("updateOrderDate").value = btn.dataset.date;
+      document.getElementById("updateOrderStoreId").value = btn.dataset.storeId;
+
+      document.getElementById("updateOrderModal").style.display = "block";
+  }
+});
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -189,6 +262,41 @@ document.addEventListener("DOMContentLoaded", () => {
         storeUserModal.style.display = "none";
       });
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const closeDriverBtn = document.getElementById("closeDriverModal");
+  const driverModal = document.getElementById("updateDriverModal");
+
+  if (closeDriverBtn && driverModal) {
+    closeDriverBtn.addEventListener("click", () => {
+      driverModal.style.display = "none";
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const closeOrderBtn = document.getElementById("closeOrderModal");
+  const orderModal = document.getElementById("updateOrderModal");
+
+  if (closeOrderBtn && orderModal) {
+      closeOrderBtn.addEventListener("click", () => {
+          orderModal.style.display = "none";
+      });
+  }
+});
+
+
+// Cerrar modal de entrega
+document.addEventListener("DOMContentLoaded", () => {
+  const closeDeliveryBtn = document.getElementById("closeDeliveryModal");
+  const deliveryModal = document.getElementById("updateDeliveryModal");
+
+  if (closeDeliveryBtn && deliveryModal) {
+      closeDeliveryBtn.addEventListener("click", () => {
+          deliveryModal.style.display = "none";
+      });
+  }
 });
 
 

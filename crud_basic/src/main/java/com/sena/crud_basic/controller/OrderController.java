@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 import com.sena.crud_basic.model.Order;
 
 import com.sena.crud_basic.DTO.OrderDTO;
@@ -47,16 +48,50 @@ public class OrderController {
 
     // Eliminar
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable int id) {
+    public ResponseEntity<Map<String, String>> deleteOrder(@PathVariable int id) {
         responseDTO response = orderService.delete(id);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+        
+        try {
+            HttpStatus status = HttpStatus.valueOf(Integer.parseInt(response.getStatus()));
+            return ResponseEntity
+                    .status(status)
+                    .body(Map.of(
+                        "status", response.getStatus(),
+                        "message", response.getMessage()
+                    ));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of(
+                        "status", "500",
+                        "message", "Error procesando la respuesta"
+                    ));
+        }
     }
 
-    // Actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody OrderDTO dto) {
+    public ResponseEntity<Map<String, String>> updateOrder(
+            @PathVariable int id,
+            @RequestBody OrderDTO dto) {
+        
         responseDTO response = orderService.updateOrder(id, dto);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+        
+        try {
+            HttpStatus status = HttpStatus.valueOf(Integer.parseInt(response.getStatus()));
+            return ResponseEntity
+                    .status(status)
+                    .body(Map.of(
+                        "status", response.getStatus(),
+                        "message", response.getMessage()
+                    ));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of(
+                        "status", "500",
+                        "message", "Error procesando la actualización"
+                    ));
+        }
     }
 
 
