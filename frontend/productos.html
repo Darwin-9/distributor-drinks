@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiquidoXpress - Soluciones de Entrega</title>
+    <title>LiquidoXpress - Productos</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/login.js"></script>
 </head>
 <body>
     <div class="container">
@@ -24,31 +25,18 @@
         </div>
     </div>
 
-    <!-- 🔹 Barra de búsqueda - debe estar FUERA del contenedor de productos -->
-<div class="busqueda">
-    <input type="text" id="buscarInput" placeholder="Buscar bebida por nombre...">
-  </div>
-  
-  <!-- 🔹 Productos -->
-  <div class="productos" id="contenedorProductos">
-    <div class="producto">
-      <img src="img/agua.jpg" alt="Agua Mineral">
-      <h3>Agua Mineral</h3>
-      <p>Volumen: 500ml</p>
-      <p>Precio: $2.500 COP</p>
-      <p>Stock: 30 unidades</p>
+    <!-- Barra de búsqueda -->
+    <div class="busqueda">
+        <input type="text" id="buscarInput" placeholder="Buscar bebida por nombre...">
     </div>
-  
-    <div class="producto">
-      <img src="img/jugo.jpg" alt="Jugo de Naranja">
-      <h3>Jugo de Naranja</h3>
-      <p>Volumen: 1L</p>
-      <p>Precio: $4.200 COP</p>
-      <p>Stock: 15 unidades</p>
+    
+    <!-- Contenedor de productos -->
+    <div class="productos" id="contenedorProductos">
+        <!-- Las bebidas se cargarán aquí dinámicamente -->
     </div>
-  </div>
-  
-
+    
+    <!-- Paginación -->
+    <div id="paginacion" style="display: flex; justify-content: center; gap: 10px; margin: 20px 0;"></div>
 
     <footer>
         <div class="footer-content">
@@ -64,5 +52,8 @@
 
     <script src="js/script.js"></script>
     <script src="js/barra.js"></script>
+    <script type="module" src="js/productos.js"></script>
+    <script src="js/login.js"></script>
+
 </body>
 </html>

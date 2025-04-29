@@ -70,7 +70,7 @@ public ResponseEntity<Object> deleteById(@PathVariable int id) {
 // filtrar
 @GetMapping("/filter")
 public ResponseEntity<List<Drink>> filterDrinks(
-    @RequestParam(required = false) String search) {
+        @RequestParam(required = false) String search) {
     List<Drink> drinks = drinkService.filterDrinks(search);
     return new ResponseEntity<>(drinks, HttpStatus.OK);
 }
