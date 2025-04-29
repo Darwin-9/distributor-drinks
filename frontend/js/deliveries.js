@@ -33,7 +33,6 @@ async function cargarDependencias() {
         
     } catch (error) {
         console.error("Error al cargar dependencias:", error);
-        alert("Error al cargar datos necesarios");
     }
 }
 
@@ -70,9 +69,9 @@ document.getElementById("deliveryForm").addEventListener("submit", async (event)
     }
 
     const bodyContent = JSON.stringify({
-        order: parseInt(orderId),  // Cambiado de order_id a order
-        truck: parseInt(truckId),  // Cambiado de truck_id a truck
-        driver: parseInt(driverId), // Cambiado de driver_id a driver
+        order: parseInt(orderId),
+        truck: parseInt(truckId),  
+        driver: parseInt(driverId), 
         delivery_date: deliveryDate
     });
 
@@ -183,24 +182,29 @@ async function buscarDeliveries(date, status) {
                 hour: '2-digit',
                 minute: '2-digit'
             });
+
+            // Datos extra que queremos mostrar
+            const storeName = delivery.order?.store?.name || 'Sin tienda asignada';
+            const truckInfo = delivery.truck ? `${delivery.truck.model} (${delivery.truck.plate_number})` : 'Sin camión asignado';
+            const driverName = delivery.driver ? `${delivery.driver.first_name} ${delivery.driver.last_name}` : 'Sin conductor asignado';
             
             const item = document.createElement("li");
             item.className = "delivery-item";
             item.innerHTML = `
                 <span>
                     <strong>Entrega #${delivery.delivery_id}</strong><br>
-                    Orden: #${delivery.order_id}<br>
-                    Camión: ${delivery.truck_model} (${delivery.truck_plate})<br>
-                    Conductor: ${delivery.driver_name}<br>
+                    Tienda: ${storeName}<br>
+                    Camión: ${truckInfo}<br>
+                    Conductor: ${driverName}<br>
                     Fecha: ${formattedDate}<br>
                     Estado: ${delivery.status ? 'Activo' : 'Inactivo'}
                 </span>
                 <div class="actions">
                     <button class="update-btn update-delivery-btn"
                             data-id="${delivery.delivery_id}"
-                            data-order-id="${delivery.order_id}"
-                            data-truck-id="${delivery.truck_id}"
-                            data-driver-id="${delivery.driver_id}"
+                            data-order-id="${delivery.order?.order_id || ''}"
+                            data-truck-id="${delivery.truck?.truck_id || ''}"
+                            data-driver-id="${delivery.driver?.driver_id || ''}"
                             data-date="${delivery.delivery_date}">
                         Actualizar
                     </button>
@@ -217,6 +221,8 @@ async function buscarDeliveries(date, status) {
         alert("Error al buscar entregas: " + error.message);
     }
 }
+
+
 
 // Manejar clic en botón actualizar
 document.addEventListener('click', function(e) {

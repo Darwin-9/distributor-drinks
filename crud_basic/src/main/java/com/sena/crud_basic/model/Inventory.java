@@ -27,14 +27,18 @@ public class Inventory {
     @Column(name="last_update", nullable=false)
     private LocalDateTime last_update;
 
+    @Column(name = "status", nullable = false, columnDefinition = "boolean default true")
+    private boolean status;
+
     public Inventory() {
     }
 
-    public Inventory(int inventory_id, Drink drink, int current_stock, LocalDateTime last_update) {
+    public Inventory(int inventory_id, Drink drink, int current_stock, LocalDateTime last_update, boolean status) {
         this.inventory_id = inventory_id;
         this.drink = drink;
         this.current_stock = current_stock;
         this.last_update = last_update;
+        this.status = status;
     }
 
     public int getInventory_id() {
@@ -67,5 +71,11 @@ public class Inventory {
 
     public void setLast_update(LocalDateTime last_update) {
         this.last_update = last_update;
+    }
+    public boolean isStatus() {
+        return status;
+    }
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

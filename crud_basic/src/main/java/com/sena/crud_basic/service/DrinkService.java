@@ -20,6 +20,7 @@ public class DrinkService {
 
     // Método para guardar una bebida con validaciones
     public responseDTO save(DrinkDTO drinkDTO) {
+        
         // Validación del nombre
         if (drinkDTO.getName() == null || drinkDTO.getName().trim().isEmpty()) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre no puede estar vacío");
@@ -29,8 +30,8 @@ public class DrinkService {
         }
 
         // Validación del precio
-        if (drinkDTO.getPrice() <=0) {
-            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El precio debe ser mayor a 0");
+        if (drinkDTO.getPrice() <= 0 || drinkDTO.getPrice() > 50000) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El precio debe ser mayor a 0 y no mayor a 50000");
         }
 
         // Validación del volumen
@@ -73,8 +74,8 @@ public class DrinkService {
     }
 
 
-    public List<Drink> filterDrinks(Integer id, String name, Double price, Double volume, Integer stock) {
-        return data.filterDrinks(id, name, price, volume, stock);
+    public List<Drink> filterDrinks(String search) {
+        return data.filterDrinks(search);
     }
 
 

@@ -57,9 +57,15 @@ public class InventoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody InventoryDTO dto) {
+    public ResponseEntity<responseDTO> update(
+            @PathVariable int id,
+            @RequestBody InventoryDTO dto) {
+        
         responseDTO response = inventoryService.update(id, dto);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+        if (response.getStatus().equals(HttpStatus.OK.toString())) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/filter")

@@ -95,55 +95,60 @@ document.getElementById("updateDrinkForm").addEventListener("submit", async (eve
 
 //filtrar
 document.getElementById("searchBtn").addEventListener("click", async () => {
-    const nombre = document.getElementById("searchDrink").value.trim();
-    await buscarBebidasPorNombre(nombre);
+    const searchTerm = document.getElementById("searchDrink").value.trim();
+    await buscarBebidasPorNombre(searchTerm);
 });
 
-async function buscarBebidasPorNombre(nombre) {
+async function buscarBebidasPorNombre(searchTerm) {
     const url = new URL(`${urlDrinks}filter`);
-    if (nombre !== "") {
-        url.searchParams.append("name", nombre);
+    if (searchTerm !== "") {
+        url.searchParams.append("search", searchTerm);
     }
 
     try {
         const response = await fetch(url);
+        if (!response.ok) throw new Error(await response.text());
+        
         const bebidas = await response.json();
-
-        const contenedor = document.getElementById("drinkItems");
-        contenedor.innerHTML = "";
-
-        if (bebidas.length === 0) {
-            contenedor.innerHTML = "<li>No se encontraron bebidas.</li>";
-            return;
-        }
-
-        bebidas.forEach(bebida => {
-            const item = document.createElement("li");
-            item.classList.add("drink-item");
-
-           item.innerHTML = `
-    <span>
-        <strong>${bebida.name}</strong> - ${bebida.volume}ml - $${bebida.price} - Stock: ${bebida.stock}
-    </span>
-    <div class="actions">
-        <button class="update-btn update-drink-btn" 
-                data-id="${bebida.drink_id}"
-                data-name="${bebida.name}"
-                data-volume="${bebida.volume}"
-                data-price="${bebida.price}"
-                data-stock="${bebida.stock}">
-            Actualizar
-        </button>
-        <button class="delete-btn delete-drink-btn" data-id="${bebida.drink_id}">Eliminar</button>
-    </div>
-`;
-
-            contenedor.appendChild(item);
-        });
+        mostrarBebidas(bebidas);
     } catch (error) {
         console.error("Error al buscar bebidas:", error);
-        alert("Hubo un error al buscar bebidas.");
+        alert("Hubo un error al buscar bebidas: " + error.message);
     }
+}
+
+function mostrarBebidas(bebidas) {
+    const contenedor = document.getElementById("drinkItems");
+    contenedor.innerHTML = "";
+
+    if (bebidas.length === 0) {
+        contenedor.innerHTML = "<li>No se encontraron bebidas.</li>";
+        return;
+    }
+
+    bebidas.forEach(bebida => {
+        const item = document.createElement("li");
+        item.classList.add("drink-item");
+
+        item.innerHTML = `
+            <span>
+                <strong>${bebida.name}</strong> - ${bebida.volume}ml - $${bebida.price} - Stock: ${bebida.stock}
+            </span>
+            <div class="actions">
+                <button class="update-btn update-drink-btn" 
+                        data-id="${bebida.drink_id}"
+                        data-name="${bebida.name}"
+                        data-volume="${bebida.volume}"
+                        data-price="${bebida.price}"
+                        data-stock="${bebida.stock}">
+                    Actualizar
+                </button>
+                <button class="delete-btn delete-drink-btn" data-id="${bebida.drink_id}">Eliminar</button>
+            </div>
+        `;
+
+        contenedor.appendChild(item);
+    });
 }
 
 //eliminar

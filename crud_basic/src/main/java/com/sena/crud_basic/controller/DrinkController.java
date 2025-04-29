@@ -70,13 +70,8 @@ public ResponseEntity<Object> deleteById(@PathVariable int id) {
 // filtrar
 @GetMapping("/filter")
 public ResponseEntity<List<Drink>> filterDrinks(
-        @RequestParam(required = false) Integer id,
-        @RequestParam(required = false) String name,
-        @RequestParam(required = false) Double price,
-        @RequestParam(required = false) Double volume,
-        @RequestParam(required = false) Integer stock) {
-
-    List<Drink> drinks = drinkService.filterDrinks(id, name, price, volume, stock);
+    @RequestParam(required = false) String search) {
+    List<Drink> drinks = drinkService.filterDrinks(search);
     return new ResponseEntity<>(drinks, HttpStatus.OK);
 }
 

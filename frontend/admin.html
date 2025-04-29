@@ -6,42 +6,88 @@
     <title>Admin</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+
+
     <div class="container">
         <div class="barraNav">
             <div class="titulo">LiquidoXpress</div>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <div class="enlances">
                 <a href="index.html">Inicio</a>
                 <a href="productos.html">Productos</a>
                 <a href="nosotros.html">Nosotros</a>
-                <a href="">Admin</a>
+                <a href="admin.html">Admin</a>
             </div>
         </div>
 </div>
 
-    <div class="admin-header">
-        <h2>Panel de Administrador</h2>
-        <p>Bienvenido al panel de administración. Aquí puedes gestionar los productos y el inventario.</p>
+<div class="admin-dashboard">
+    
+    <!-- Barra lateral -->
+    <div class="admin-sidebar">
+        <div class="admin-sidebar-header">
+            <h2>LiquidoXpress</h2>
+            <p>Panel de Administración</p>
+            <div class="admin-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+        </div>
+        
+        <div class="admin-menu">
+            <button id="toggleDrinkForm">
+                <i class="fas fa-wine-bottle"></i> Bebidas
+            </button>
+            <button id="toggleDriverForm">
+                <i class="fas fa-user-tie"></i> Conductores
+            </button>
+            <button id="toggleTruckForm">
+                <i class="fas fa-truck"></i> Camiones
+            </button>
+            <button id="toggleStoreForm">
+                <i class="fas fa-store"></i> Tiendas
+            </button>
+            <button id="toggleStoreUserForm">
+                <i class="fas fa-users"></i> Usuarios Tienda
+            </button>
+            <button id="toggleAdminForm">
+                <i class="fas fa-user-shield"></i> Administradores
+            </button>
+            <button id="toggleOrderForm">
+                <i class="fas fa-clipboard-list"></i> Órdenes
+            </button>
+            <button id="toggleDeliveryForm">
+                <i class="fas fa-shipping-fast"></i> Entregas
+            </button>
+            <button id="toggleInventoryForm">
+                <i class="fas fa-boxes"></i> Inventario
+            </button>
+            <button id="toggleOrderDrinkForm">
+                <i class="fas fa-list-ol"></i> Detalles Pedido
+            </button>
+        </div>
     </div>
 
-    <div class="admin-buttons">
-        <button id="toggleDrinkForm">Gestión de Bebidas</button>
-        <button >Gestionar Conductores</button>
-        <button id="toggleTruckForm">Gestionar Camiones</button>
-        <button >Gestionar Tiendas</button>
-        <button >Gestionar UsuarioTienda</button>
-        <button id="toggleAdminForm">Gestionar Admin</button>
-        <button >Gestionar Orden</button>
-        <button >Gestionar Domicilio</button>
-        <button >Gestionar Inventario</button>
-        <button >Gestionar OrdenBebida</button>
-    </div>
+     <!-- Contenido principal -->
+     <div class="admin-main-content">
+        <div class="admin-content-header">
+            <h2 id="currentSectionTitle">Gestión de Bebidas</h2>
+            <p id="currentSectionDescription">Administra el catálogo de bebidas disponibles</p>
+        </div>
 
 <!----------------------------------- GESTIONAR BEBIDAS ------------------------------------------->
-
-    <div id="drinkFormContainer" style="display: none;">
+    <div id="drinkFormContainer"">
         <div class="admin-panel">
+
             <h3>Gestión de Bebidas</h3>
     
             <!-- Formulario de bebidas -->
@@ -78,35 +124,6 @@
                             </div>
                         </div>
                         
-        </div>
-    </div>
-
-    <div id="updateModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeDrinkModal">&times;</span>
-            <h3>Actualizar Bebida</h3>
-            <!-- Elemento para mensajes -->
-            <div id="drink-message"></div>
-            
-            <form id="updateDrinkForm" class="modal-form">
-                <input type="hidden" id="updateDrinkId">
-                
-                <label for="updateDrinkName">Nombre del Producto:</label>
-                <input type="text" id="updateDrinkName" required>
-                
-                <label for="updateDrinkVolume">Volumen (ml):</label>
-                <input type="text" id="updateDrinkVolume" required>
-                
-                <label for="updateDrinkPrice">Precio ($):</label>
-                <input type="number" id="updateDrinkPrice" min="0" step="0.01" required>
-                
-                <label for="updateDrinkStock">Stock:</label>
-                <input type="number" id="updateDrinkStock" min="0" required>
-                
-                <button type="submit">
-                    <span class="btn-text">Guardar Cambios</span>
-                </button>
-            </form>
         </div>
     </div>
 
@@ -150,31 +167,6 @@
     </div>
 </div>
 
-<div id="updateModal1" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeTruckModal">&times;</span>
-        <h3>Actualizar Camion</h3>
-        <!-- Elemento para mensajes -->
-        <div id="drink-message"></div>
-        
-        <form id="updateTruckForm" class="modal-form">
-            <input type="hidden" id="updateTruckId">
-            
-            <label for="updateTruckModel">Modelo del Camion:</label>
-            <input type="text" id="updateTruckModel" required>
-
-            <label for="updateTruckPlate">Placa:</label>
-            <input type="text" id="updateTruckPlate" required>
-
-            <label for="updateTruckCapacity">Capacidad:</label>
-            <input type="text" id="updateTruckCapacity" required>
-            
-            <button type="submit">
-                <span class="btn-text">Guardar Cambios</span>
-            </button>
-        </form>
-    </div>
-</div>
 
     <!-- GESTIÓN DE ADMINISTRADORES -->
 <div id="adminFormContainer" style="display: none;">
@@ -208,28 +200,6 @@
                 <!-- Aquí se cargarán dinámicamente los administradores -->
             </div>
         </div>
-    </div>
-</div>
-
-<!-- MODAL PARA ACTUALIZAR ADMIN -->
-<div id="updateAdminModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeAdminModal">&times;</span>
-        <h3>Actualizar Administrador</h3>
-        <form id="updateAdminForm" class="modal-form">
-            <input type="hidden" id="updateAdminId">
-
-            <label for="updateAdminName">Nombre:</label>
-            <input type="text" id="updateAdminName" required>
-
-            <label for="updateAdminEmail">Correo:</label>
-            <input type="text" id="updateAdminEmail" required>
-
-            <label for="updateAdminPassword">Contraseña:</label>
-            <input type="text" id="updateAdminPassword" required>
-
-            <button type="submit">Guardar Cambios</button>
-        </form>
     </div>
 </div>
 
@@ -270,33 +240,6 @@
         </div>
     </div>
 </div>
-
-<!-- MODAL PARA ACTUALIZAR TIENDA -->
-<div id="updateStoreModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeStoreModal">&times;</span>
-        <h3>Actualizar Tienda</h3>
-        <form id="updateStoreForm" class="modal-form">
-            <input type="hidden" id="updateStoreId">
-
-            <label for="updateStoreName">Nombre:</label>
-            <input type="text" id="updateStoreName" required>
-
-            <label for="updateStoreAddress">Dirección:</label>
-            <input type="text" id="updateStoreAddress" required>
-
-            <label for="updateStorePhone">Teléfono:</label>
-            <input type="number" id="updateStorePhone" required>
-
-            <label for="updateStoreCity">Ciudad:</label>
-            <input type="text" id="updateStoreCity" required>
-
-            <button type="submit">Guardar Cambios</button>
-        </form>
-    </div>
-</div>
-
-
 
 <!----------------------------------- GESTIONAR USUARIOS DE TIENDA ------------------------------------------->
 <div id="storeUserFormContainer" style="display: none;">
@@ -341,30 +284,7 @@
     </div>
 </div>
 
-<!-- MODAL PARA ACTUALIZAR USUARIO DE TIENDA -->
-<!-- MODAL PARA ACTUALIZAR USUARIO DE TIENDA -->
-<div id="updateStoreUserModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeStoreUserModal">&times;</span>
-        <h3>Actualizar Usuario de Tienda</h3>
-        <form id="updateStoreUserForm" class="modal-form">
-            <input type="hidden" id="updateStoreUserId">
 
-            <label for="updateStoreUserName">Nombre de usuario:</label>
-            <input type="text" id="updateStoreUserName" minlength="3" maxlength="50" required>
-
-            <label for="updateStoreUserEmail">Correo electrónico:</label>
-            <input type="email" id="updateStoreUserEmail" required>
-
-            <label for="updateStoreUserStoreId">ID de Tienda:</label>
-            <select id="updateStoreUserStoreId" required>
-                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
-            </select>
-
-            <button type="submit">Guardar Cambios</button>
-        </form>
-    </div>
-</div>
 
 <!----------------------------------- GESTIONAR CONDUCTORES ------------------------------------------->
 <div id="driverFormContainer" style="display: none;">
@@ -407,33 +327,6 @@
     </div>
 </div>
 
-<!-- MODAL PARA ACTUALIZAR CONDUCTOR -->
-<div id="updateDriverModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeDriverModal">&times;</span>
-        <h3>Actualizar Conductor</h3>
-        <form id="updateDriverForm" class="modal-form">
-            <input type="hidden" id="updateDriverId">
-
-            <label for="updateDriverFirstName">Nombre:</label>
-            <input type="text" id="updateDriverFirstName" minlength="1" maxlength="50" required>
-
-            <label for="updateDriverLastName">Apellido:</label>
-            <input type="text" id="updateDriverLastName" minlength="1" maxlength="50" required>
-
-            <label for="updateDriverLicense">Número de Licencia:</label>
-            <input type="text" id="updateDriverLicense" minlength="5" maxlength="20" required>
-
-            <label for="updateDriverTruckId">Camión Asignado:</label>
-            <select id="updateDriverTruckId" required>
-                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
-            </select>
-
-            <button type="submit">Guardar Cambios</button>
-        </form>
-    </div>
-</div>
-
 <!----------------------------------- GESTIONAR ORDENES ------------------------------------------->
 <div id="orderFormContainer" style="display: none;">
     <div class="admin-panel">
@@ -468,28 +361,6 @@
         </div>
     </div>
 </div>
-
-<!-- MODAL PARA ACTUALIZAR ORDEN -->
-<div id="updateOrderModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeOrderModal">&times;</span>
-        <h3>Actualizar Orden</h3>
-        <form id="updateOrderForm" class="modal-form">
-            <input type="hidden" id="updateOrderId">
-
-            <label for="updateOrderStoreId">Tienda:</label>
-            <select id="updateOrderStoreId" required>
-                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
-            </select>
-
-            <label for="updateOrderDate">Fecha y Hora:</label>
-            <input type="datetime-local" id="updateOrderDate" required>
-
-            <button type="submit">Guardar Cambios</button>
-        </form>
-    </div>
-</div>
-
 
 <!----------------------------------- GESTIONAR ENTREGAS ------------------------------------------->
 <div id="deliveryFormContainer" style="display: none;">
@@ -538,6 +409,272 @@
     </div>
 </div>
 
+<!----------------------------------- GESTIONAR INVENTARIO ------------------------------------------->
+<div id="inventoryFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Inventario</h3>
+
+        <!-- Formulario de inventario -->
+        <form id="inventoryForm">
+            <label for="inventoryDrinkId">Bebida:</label>
+            <select id="inventoryDrinkId" required>
+                <option value="">Seleccione una bebida</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="inventoryStock">Stock Actual:</label>
+            <input type="number" id="inventoryStock" min="0" required>
+
+            <button type="submit">Registrar en Inventario</button>
+        </form>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchInventory" placeholder="Buscar por bebida o stock bajo...">
+            <button id="searchInventoryBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de inventario -->
+        <div class="list" id="inventoryList">
+            <h4>Lista de Inventario</h4>
+            <div id="inventoryItems">
+                <!-- Aquí se cargarán dinámicamente los registros de inventario -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----------------------------------- GESTIONAR ORDEN-BEBIDA ------------------------------------------->
+<div id="orderDrinkFormContainer" style="display: none;">
+    <div class="admin-panel">
+        <h3>Gestión de Detalles de Pedido</h3>
+
+        <!-- Formulario de detalles de pedido -->
+        <form id="orderDrinkForm">
+            <label for="orderDrinkOrderId">Orden:</label>
+            <select id="orderDrinkOrderId" required>
+                <option value="">Seleccione una orden</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="orderDrinkDrinkId">Bebida:</label>
+            <select id="orderDrinkDrinkId" required>
+                <option value="">Seleccione una bebida</option>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="orderDrinkQuantity">Cantidad:</label>
+            <input type="number" id="orderDrinkQuantity" min="1" required>
+
+            <button type="submit">Agregar a Pedido</button>
+        </form>
+        
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="searchOrderDrink" placeholder="Buscar por 'orden:ID' o 'bebida:ID'...">
+            <button id="searchOrderDrinkBtn">Buscar</button>
+        </div>
+
+        <!-- Lista de detalles de pedido -->
+        <div class="list" id="orderDrinkList">
+            <h4>Lista de Detalles de Pedido</h4>
+            <div id="orderDrinkItems">
+                <!-- Aquí se cargarán dinámicamente los detalles -->
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+    </div>
+
+</div>
+
+<!----------------------------------------------------------------- MODALES ACTUALIZAR ------------------------------------------------------------->
+
+<!-- MODAL PARA ACTUALIZAR BEBIDAS -->
+<div id="updateModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeDrinkModal">&times;</span>
+        <h3>Actualizar Bebida</h3>
+        <!-- Elemento para mensajes -->
+        <div id="drink-message"></div>
+        
+        <form id="updateDrinkForm" class="modal-form">
+            <input type="hidden" id="updateDrinkId">
+            
+            <label for="updateDrinkName">Nombre del Producto:</label>
+            <input type="text" id="updateDrinkName" required>
+            
+            <label for="updateDrinkVolume">Volumen (ml):</label>
+            <input type="text" id="updateDrinkVolume" required>
+            
+            <label for="updateDrinkPrice">Precio ($):</label>
+            <input type="number" id="updateDrinkPrice" min="0" step="0.01" required>
+            
+            <label for="updateDrinkStock">Stock:</label>
+            <input type="number" id="updateDrinkStock" min="0" required>
+            
+            <button type="submit">
+                <span class="btn-text">Guardar Cambios</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR CAMIONES -->
+<div id="updateModal1" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeTruckModal">&times;</span>
+        <h3>Actualizar Camion</h3>
+        <!-- Elemento para mensajes -->
+        <div id="drink-message"></div>
+        
+        <form id="updateTruckForm" class="modal-form">
+            <input type="hidden" id="updateTruckId">
+            
+            <label for="updateTruckModel">Modelo del Camion:</label>
+            <input type="text" id="updateTruckModel" required>
+
+            <label for="updateTruckPlate">Placa:</label>
+            <input type="text" id="updateTruckPlate" required>
+
+            <label for="updateTruckCapacity">Capacidad:</label>
+            <input type="text" id="updateTruckCapacity" required>
+            
+            <button type="submit">
+                <span class="btn-text">Guardar Cambios</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL PARA ACTUALIZAR ADMIN -->
+<div id="updateAdminModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeAdminModal">&times;</span>
+        <h3>Actualizar Administrador</h3>
+        <form id="updateAdminForm" class="modal-form">
+            <input type="hidden" id="updateAdminId">
+
+            <label for="updateAdminName">Nombre:</label>
+            <input type="text" id="updateAdminName" required>
+
+            <label for="updateAdminEmail">Correo:</label>
+            <input type="text" id="updateAdminEmail" required>
+
+            <label for="updateAdminPassword">Contraseña:</label>
+            <input type="text" id="updateAdminPassword" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- MODAL PARA ACTUALIZAR TIENDA -->
+<div id="updateStoreModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeStoreModal">&times;</span>
+        <h3>Actualizar Tienda</h3>
+        <form id="updateStoreForm" class="modal-form">
+            <input type="hidden" id="updateStoreId">
+
+            <label for="updateStoreName">Nombre:</label>
+            <input type="text" id="updateStoreName" required>
+
+            <label for="updateStoreAddress">Dirección:</label>
+            <input type="text" id="updateStoreAddress" required>
+
+            <label for="updateStorePhone">Teléfono:</label>
+            <input type="number" id="updateStorePhone" required>
+
+            <label for="updateStoreCity">Ciudad:</label>
+            <input type="text" id="updateStoreCity" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- MODAL PARA ACTUALIZAR USUARIO DE TIENDA -->
+<div id="updateStoreUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeStoreUserModal">&times;</span>
+        <h3>Actualizar Usuario de Tienda</h3>
+        <form id="updateStoreUserForm" class="modal-form">
+            <input type="hidden" id="updateStoreUserId">
+            
+            <label for="updateStoreUserName">Nombre de usuario:</label>
+            <input type="text" id="updateStoreUserName" minlength="3" maxlength="50" required>
+            
+            <label for="updateStoreUserEmail">Correo electrónico:</label>
+            <input type="email" id="updateStoreUserEmail" required>
+            
+            <label for="updateStoreUserStoreId">Tienda:</label>
+            <select id="updateStoreUserStoreId" required>
+                <!-- Las opciones se llenarán con JavaScript -->
+            </select>
+            
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- MODAL PARA ACTUALIZAR CONDUCTOR -->
+<div id="updateDriverModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeDriverModal">&times;</span>
+        <h3>Actualizar Conductor</h3>
+        <form id="updateDriverForm" class="modal-form">
+            <input type="hidden" id="updateDriverId">
+            
+            <label for="updateDriverFirstName">Nombre:</label>
+            <input type="text" id="updateDriverFirstName" required>
+            
+            <label for="updateDriverLastName">Apellido:</label>
+            <input type="text" id="updateDriverLastName" required>
+            
+            <label for="updateDriverLicense">Licencia:</label>
+            <input type="text" id="updateDriverLicense" required>
+            
+            <label for="updateDriverTruckId">Camión:</label>
+            <select id="updateDriverTruckId" required>
+                <!-- Opciones se llenarán con JavaScript -->
+            </select>
+            
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+
+<!-- MODAL PARA ACTUALIZAR ORDEN -->
+<div id="updateOrderModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeOrderModal">&times;</span>
+        <h3>Actualizar Orden</h3>
+        <form id="updateOrderForm" class="modal-form">
+            <input type="hidden" id="updateOrderId">
+
+            <label for="updateOrderStoreId">Tienda:</label>
+            <select id="updateOrderStoreId" required>
+                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+            </select>
+
+            <label for="updateOrderDate">Fecha y Hora:</label>
+            <input type="datetime-local" id="updateOrderDate" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
 <!-- MODAL PARA ACTUALIZAR ENTREGA -->
 <div id="updateDeliveryModal" class="modal">
     <div class="modal-content">
@@ -570,19 +707,48 @@
 </div>
 
 
+<!-- MODAL PARA ACTUALIZAR INVENTARIO -->
+<div id="updateInventoryModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeInventoryModal">&times;</span>
+        <h3>Actualizar Registro de Inventario</h3>
+        <form id="updateInventoryForm" class="modal-form">
+            <input type="hidden" id="updateInventoryId">
+
+            <label for="updateInventoryDrinkId">Bebida:</label>
+            <select id="updateInventoryDrinkId" required>
+                <!-- Las opciones se llenarán dinámicamente -->
+            </select>
+
+            <label for="updateInventoryStock">Stock Actual:</label>
+            <input type="number" id="updateInventoryStock" min="0" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
 
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Sobre nosotros</h4>
-                <p>LiquidoXpress fue fundada en 2020 con la misión de revolucionar la distribución de líquidos para industrias y consumidores.</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 LiquidoXpress. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+      <!-- MODAL PARA ACTUALIZAR DETALLE DE PEDIDO -->
+<div id="updateOrderDrinkModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="closeOrderDrinkModal">&times;</span>
+        <h3>Actualizar Detalle de Pedido</h3>
+        <form id="updateOrderDrinkForm" class="modal-form">
+            <input type="hidden" id="updateOrderDrinkId">
+
+            <label for="updateOrderDrinkQuantity">Cantidad:</label>
+            <input type="number" id="updateOrderDrinkQuantity" min="1" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        
+    </div>
+  
+</div>
+</div>
+
+    
 
     <script type="module" src="js/constante.js"></script>
     <script type="module" src="js/drinks.js"></script>
@@ -593,8 +759,11 @@
     <script type="module" src="js/drivers.js"></script>
     <script type="module" src="js/orders.js"></script>
     <script type="module" src="js/deliveries.js"></script>
+    <script type="module" src="js/inventory.js"></script>
+    <script type="module" src="js/orderDrinks.js"></script>
 
     <script src="js/script.js"></script>
+    <script src="js/barra.js"></script>
     
 </body>
 </html>

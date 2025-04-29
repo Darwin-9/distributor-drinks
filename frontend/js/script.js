@@ -7,73 +7,68 @@ function ocultarTodosLosFormularios() {
     document.getElementById("driverFormContainer").style.display = "none";
     document.getElementById("orderFormContainer").style.display = "none";
     document.getElementById("deliveryFormContainer").style.display = "none";
+    document.getElementById("inventoryFormContainer").style.display = "none";
+    document.getElementById("orderDrinkFormContainer").style.display = "none";
 
 }
 
-document.getElementById("toggleDrinkForm").addEventListener("click", () => {
-    const formContainer = document.getElementById("drinkFormContainer");
-    const isVisible = formContainer.style.display === "block";
+function removerClaseActive() {
+  document.querySelectorAll('.admin-menu button').forEach(btn => {
+      btn.classList.remove('active');
+  });
+}
 
-    ocultarTodosLosFormularios();
-    formContainer.style.display = isVisible ? "none" : "block";
+function mostrarFormulario(idFormulario, titulo, descripcion) {
+  ocultarTodosLosFormularios();
+  removerClaseActive();
+  
+  document.getElementById(idFormulario).style.display = "block";
+  document.getElementById('currentSectionTitle').textContent = titulo;
+  document.getElementById('currentSectionDescription').textContent = descripcion;
+  
+  // Marcar el botón como activo
+  document.querySelector(`button[onclick*="${idFormulario}"]`).classList.add('active');
+}
+
+// Configuración de event listeners para cada botón
+document.getElementById("toggleDrinkForm").addEventListener("click", () => {
+  mostrarFormulario("drinkFormContainer", "Gestión de Bebidas", "Administra el catálogo de bebidas disponibles");
 });
 
 document.getElementById("toggleTruckForm").addEventListener("click", () => {
-    const formContainer = document.getElementById("truckFormContainer");
-    const isVisible = formContainer.style.display === "block";
-
-    ocultarTodosLosFormularios();
-    formContainer.style.display = isVisible ? "none" : "block";
+  mostrarFormulario("truckFormContainer", "Gestión de Camiones", "Administra la flota de camiones");
 });
 
 document.getElementById("toggleAdminForm").addEventListener("click", () => {
-    const formContainer = document.getElementById("adminFormContainer");
-    const isVisible = formContainer.style.display === "block";
-
-    ocultarTodosLosFormularios();
-    formContainer.style.display = isVisible ? "none" : "block";
+  mostrarFormulario("adminFormContainer", "Gestión de Administradores", "Administra los usuarios administradores");
 });
 
-document.querySelector("button:nth-child(4)").addEventListener("click", () => {
-    const formContainer = document.getElementById("storeFormContainer");
-    const isVisible = formContainer.style.display === "block";
-
-    ocultarTodosLosFormularios();
-    formContainer.style.display = isVisible ? "none" : "block";
+document.getElementById("toggleStoreForm").addEventListener("click", () => {
+  mostrarFormulario("storeFormContainer", "Gestión de Tiendas", "Administra las tiendas registradas");
 });
 
-document.querySelector("button:nth-child(5)").addEventListener("click", () => {
-    const formContainer = document.getElementById("storeUserFormContainer");
-    const isVisible = formContainer.style.display === "block";
-
-    ocultarTodosLosFormularios();
-    formContainer.style.display = isVisible ? "none" : "block";
+document.getElementById("toggleStoreUserForm").addEventListener("click", () => {
+  mostrarFormulario("storeUserFormContainer", "Gestión de Usuarios de Tienda", "Administra los usuarios asociados a tiendas");
 });
 
-
-document.querySelector("button:nth-child(2)").addEventListener("click", () => {
-  const formContainer = document.getElementById("driverFormContainer");
-  const isVisible = formContainer.style.display === "block";
-
-  ocultarTodosLosFormularios();
-  formContainer.style.display = isVisible ? "none" : "block";
+document.getElementById("toggleDriverForm").addEventListener("click", () => {
+  mostrarFormulario("driverFormContainer", "Gestión de Conductores", "Administra los conductores y sus asignaciones");
 });
 
-document.querySelector("button:nth-child(7)").addEventListener("click", () => {
-  const formContainer = document.getElementById("orderFormContainer");
-  const isVisible = formContainer.style.display === "block";
-
-  ocultarTodosLosFormularios();
-  formContainer.style.display = isVisible ? "none" : "block";
+document.getElementById("toggleOrderForm").addEventListener("click", () => {
+  mostrarFormulario("orderFormContainer", "Gestión de Órdenes", "Administra las órdenes de pedido");
 });
 
+document.getElementById("toggleDeliveryForm").addEventListener("click", () => {
+  mostrarFormulario("deliveryFormContainer", "Gestión de Entregas", "Administra los registros de entregas");
+});
 
-document.querySelector("button:nth-child(8)").addEventListener("click", () => {
-  const formContainer = document.getElementById("deliveryFormContainer");
-  const isVisible = formContainer.style.display === "block";
+document.getElementById("toggleInventoryForm").addEventListener("click", () => {
+  mostrarFormulario("inventoryFormContainer", "Gestión de Inventario", "Administra el inventario de productos");
+});
 
-  ocultarTodosLosFormularios();
-  formContainer.style.display = isVisible ? "none" : "block";
+document.getElementById("toggleOrderDrinkForm").addEventListener("click", () => {
+  mostrarFormulario("orderDrinkFormContainer", "Gestión de Detalles de Pedido", "Administra los detalles de cada pedido");
 });
 
 
@@ -207,6 +202,39 @@ document.addEventListener('click', function(e) {
   }
 });
 
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('update-inventory-btn')) {
+      const btn = e.target;
+      const inventoryId = btn.getAttribute('data-id');
+      
+      document.getElementById('updateInventoryId').value = inventoryId;
+      document.getElementById('updateInventoryModal').dataset.currentId = inventoryId;
+
+      document.getElementById("updateInventoryStock").value = btn.dataset.stock;
+      
+      // Seleccionar la bebida correcta en el select
+      const drinkId = btn.dataset.drinkId;
+      const drinkSelect = document.getElementById("updateInventoryDrinkId");
+      drinkSelect.value = drinkId;
+
+      document.getElementById("updateInventoryModal").style.display = "block";
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('update-order-drink-btn')) {
+      const btn = e.target;
+      const orderDrinkId = btn.getAttribute('data-id');
+      
+      document.getElementById('updateOrderDrinkId').value = orderDrinkId;
+      document.getElementById('updateOrderDrinkModal').dataset.currentId = orderDrinkId;
+
+      document.getElementById("updateOrderDrinkQuantity").value = btn.dataset.quantity;
+      document.getElementById("updateOrderDrinkModal").style.display = "block";
+  }
+});
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     // Cerrar modal de bebida
@@ -218,8 +246,10 @@ document.addEventListener("DOMContentLoaded", () => {
         drinkModal.style.display = "none";
       });
     }
+  });
   
     // Cerrar modal de camión
+    document.addEventListener("DOMContentLoaded", () => {
     const closeTruckBtn = document.getElementById("closeTruckModal");
     const truckModal = document.getElementById("updateModal1");
   
@@ -228,16 +258,19 @@ document.addEventListener("DOMContentLoaded", () => {
         truckModal.style.display = "none";
       });
     }
+  });
 
-     // Cerrar modal de camión
+     // Cerrar modal de admin
+     document.addEventListener("DOMContentLoaded", () => {
      const closeAdminBtn = document.getElementById("closeAdminModal");
      const adminModal = document.getElementById("updateAdminModal");
    
      if (closeAdminBtn && adminModal) {
-       closeTruckBtn.addEventListener("click", () => {
-         truckModal.style.display = "none";
+       closeAdminBtn.addEventListener("click", () => {
+         adminModal.style.display = "none";
        });
      }
+    });
 
      // Agrega el cierre del modal de tiendas
 document.addEventListener("DOMContentLoaded", () => {
@@ -299,6 +332,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const closeInventoryBtn = document.getElementById("closeInventoryModal");
+  const inventoryModal = document.getElementById("updateInventoryModal");
 
-  });
+  if (closeInventoryBtn && inventoryModal) {
+      closeInventoryBtn.addEventListener("click", () => {
+          inventoryModal.style.display = "none";
+      });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const closeOrderDrinkBtn = document.getElementById("closeOrderDrinkModal");
+  const orderDrinkModal = document.getElementById("updateOrderDrinkModal");
+
+  if (closeOrderDrinkBtn && orderDrinkModal) {
+      closeOrderDrinkBtn.addEventListener("click", () => {
+          orderDrinkModal.style.display = "none";
+      });
+  }
+});
+
   
+
+// Menú hamburguesa del panel de administración
+document.querySelector('.admin-menu-toggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.querySelector('.admin-menu').classList.toggle('active');
+});

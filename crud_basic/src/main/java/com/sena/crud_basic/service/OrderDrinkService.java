@@ -7,7 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.OrderDrinkDTO;
 import com.sena.crud_basic.DTO.responseDTO;
+import com.sena.crud_basic.model.Drink;
+import com.sena.crud_basic.model.Order;
 import com.sena.crud_basic.model.OrderDrink;
+import com.sena.crud_basic.repository.IDrink;
+import com.sena.crud_basic.repository.IOrder;
 import com.sena.crud_basic.repository.IOrderDrink;
 import java.util.List;
 
@@ -15,12 +19,30 @@ import java.util.List;
 public class OrderDrinkService {
 
     @Autowired
+    private IOrder orderRepository;
+    
+    @Autowired
+    private IDrink drinkRepository;
+
+    @Autowired
     private IOrderDrink data;
 
     // Método para guardar un detalle de pedido con validaciones
-    public responseDTO save(OrderDrinkDTO orderDrinkDTO) {
+   public responseDTO save(OrderDrinkDTO orderDrinkDTO) {
         if (orderDrinkDTO.getQuantity() <= 0) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La cantidad debe ser mayor a 0");
+        }
+
+        // Validar que existan la orden y la bebida
+        Optional<Order> order = orderRepository.findById(orderDrinkDTO.getOrder_id());
+        Optional<Drink> drink = drinkRepository.findById(orderDrinkDTO.getDrink_id());
+        
+        if (!order.isPresent()) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La orden no existe");
+        }
+        
+        if (!drink.isPresent()) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La bebida no existe");
         }
 
         OrderDrink orderDrink = convertToModel(orderDrinkDTO);
@@ -28,6 +50,7 @@ public class OrderDrinkService {
 
         return new responseDTO(HttpStatus.OK.toString(), "Detalle de pedido guardado exitosamente");
     }
+
 
     // Método para obtener todos los detalles de pedidos
     public List<OrderDrink> findAll() {
@@ -79,12 +102,19 @@ public List<OrderDrink> filterOrderDrinks(Integer quantity, Integer drinkId, Int
 }
 
     // Método para convertir un modelo a un DTO
-    public OrderDrinkDTO convertToDTO(OrderDrink orderDrink) {
-        return new OrderDrinkDTO(orderDrink.getQuantity());
+     public OrderDrinkDTO convertToDTO(OrderDrink orderDrink) {
+        return new OrderDrinkDTO(
+            orderDrink.getOrder().getOrder_id(),
+            orderDrink.getDrink().getDrink_id(),
+            orderDrink.getQuantity()
+        );
     }
 
     // Método para convertir un DTO a un modelo
     public OrderDrink convertToModel(OrderDrinkDTO orderDrinkDTO) {
-        return new OrderDrink(0, null, null, orderDrinkDTO.getQuantity());
+        Order order = orderRepository.findById(orderDrinkDTO.getOrder_id()).orElse(null);
+        Drink drink = drinkRepository.findById(orderDrinkDTO.getDrink_id()).orElse(null);
+        
+        return new OrderDrink(0, order, drink, orderDrinkDTO.getQuantity());
     }
 }

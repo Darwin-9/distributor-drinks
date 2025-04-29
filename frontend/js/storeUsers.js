@@ -14,22 +14,21 @@ async function cargarTiendas() {
         
         // Limpiar selects
         selectCreacion.innerHTML = '<option value="">Seleccione una tienda</option>';
-        selectActualizacion.innerHTML = '';
+        selectActualizacion.innerHTML = '<option value="">Seleccione una tienda</option>';
         
         // Llenar con las tiendas disponibles
         stores.forEach(store => {
             if(store.status) { // Solo tiendas activas
                 const option = document.createElement("option");
                 option.value = store.store_id;
-                option.textContent = `${store.name} (ID: ${store.store_id})`;
+                option.textContent = `${store.name} (${store.city})`;
                 
                 selectCreacion.appendChild(option.cloneNode(true));
-                selectActualizacion.appendChild(option);
+                selectActualizacion.appendChild(option.cloneNode(true));
             }
         });
     } catch (error) {
         console.error("Error al cargar tiendas:", error);
-        alert("Error al cargar la lista de tiendas");
     }
 }
 
@@ -45,44 +44,44 @@ document.getElementById("storeUserForm").addEventListener("submit", async (event
     const password = document.getElementById("storeUserPassword").value;
     const storeId = document.getElementById("storeUserStoreId").value;
 
+    // Validación básica
     if (!storeId) {
         alert("Por favor seleccione una tienda");
         return;
     }
 
-    const bodyContent = JSON.stringify({
-        "username": username,
-        "email": email,
-        "password": password,
-        "store_id": parseInt(storeId)
-    });
+    if (username.length < 3 || username.length > 50) {
+        alert("El nombre de usuario debe tener entre 3 y 50 caracteres");
+        return;
+    }
 
     try {
         const response = await fetch(urlStoreUsers, {
             method: 'POST',
             headers: {
-                "Accept": "*/*",
                 "Content-Type": "application/json"
             },
-            body: bodyContent
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+                store_id: parseInt(storeId)
+            })
         });
-
-        let data = await response.text();
 
         if (response.ok) {
             document.getElementById("storeUserForm").reset();
-            alert("Usuario de tienda registrado exitosamente.");
-            buscarStoreUsers("", ""); // Refresca la lista
+            alert("Usuario registrado exitosamente");
+            buscarStoreUsers(""); // Refrescar lista
         } else {
-            alert("Error al registrar usuario: " + data);
+            alert("Error al registrar usuario");
         }
-
-        console.log(data);
     } catch (error) {
-        console.error("Error al registrar usuario:", error);
-        alert("Error en la solicitud: " + error);
+        console.error("Error:", error);
+        alert("Error en la solicitud");
     }
 });
+
 
 // Actualizar usuario de tienda
 document.getElementById("updateStoreUserForm").addEventListener("submit", async (event) => {
@@ -93,6 +92,12 @@ document.getElementById("updateStoreUserForm").addEventListener("submit", async 
     const email = document.getElementById("updateStoreUserEmail").value;
     const storeId = document.getElementById("updateStoreUserStoreId").value;
 
+    // Validación básica
+    if (!storeId) {
+        alert("Por favor seleccione una tienda");
+        return;
+    }
+
     try {
         const response = await fetch(`${urlStoreUsers}${id}`, {
             method: "PUT",
@@ -100,16 +105,16 @@ document.getElementById("updateStoreUserForm").addEventListener("submit", async 
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username,
-                email,
-                store_id: storeId
+                username: username,
+                email: email,
+                store_id: parseInt(storeId)
             })
         });
 
         if (response.ok) {
-            alert("Usuario de tienda actualizado exitosamente.");
+            alert("Usuario actualizado exitosamente.");
             document.getElementById("updateStoreUserModal").style.display = "none";
-            document.getElementById("searchStoreUserBtn").click();
+            buscarStoreUsers(""); // Refrescar lista
         } else {
             const errorMsg = await response.text();
             alert("Error al actualizar usuario: " + errorMsg);
@@ -124,22 +129,15 @@ document.getElementById("updateStoreUserForm").addEventListener("submit", async 
 document.getElementById("searchStoreUserBtn").addEventListener("click", async (e) => {
     e.preventDefault();
     const searchTerm = document.getElementById("searchStoreUser").value.trim();
-    await buscarStoreUsers(searchTerm, "");
+    await buscarStoreUsers(searchTerm);
 });
 
-async function buscarStoreUsers(username, email) {
+async function buscarStoreUsers(searchTerm) {
     try {
-        const url = new URL(`${urlBase}store-users/filter`);
-        if (username) url.searchParams.append("username", username);
-        if (email) url.searchParams.append("email", email);
-        url.searchParams.append("status", true); // Solo usuarios activos
+        const url = new URL(`${urlStoreUsers}filter`);
+        if (searchTerm) url.searchParams.append("search", searchTerm);
 
         const response = await fetch(url);
-        
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-
         const storeUsers = await response.json();
         const contenedor = document.getElementById("storeUserItems");
         contenedor.innerHTML = "";
@@ -150,23 +148,19 @@ async function buscarStoreUsers(username, email) {
         }
 
         storeUsers.forEach(user => {
-            const storeInfo = user.store_id ? 
-                `${user.store_name} (ID: ${user.store_id})` : 
-                "Sin tienda asignada";
-            
             const item = document.createElement("li");
             item.className = "store-user-item";
             item.innerHTML = `
                 <span>
                     <strong>${user.username}</strong> - ${user.email}<br>
-                    Tienda: ${storeInfo} - Estado: ${user.status ? 'Activo' : 'Inactivo'}
+                    Tienda: ${user.store.name} - Estado: ${user.status ? 'Activo' : 'Inactivo'}
                 </span>
                 <div class="actions">
                     <button class="update-btn update-store-user-btn"
                             data-id="${user.store_user_id}"
                             data-username="${user.username}"
                             data-email="${user.email}"
-                            data-store-id="${user.store_id}">
+                            data-store-id="${user.store.store_id}">
                         Actualizar
                     </button>
                     <button class="delete-btn delete-store-user-btn" 
@@ -178,10 +172,11 @@ async function buscarStoreUsers(username, email) {
             contenedor.appendChild(item);
         });
     } catch (error) {
-        console.error("Error en buscarStoreUsers:", error);
-        alert("Error al buscar usuarios: " + error.message);
+        console.error("Error al buscar usuarios:", error);
+        alert("Error al buscar usuarios");
     }
 }
+
 
 // Manejar clic en botón actualizar
 document.addEventListener('click', function(e) {
@@ -189,17 +184,17 @@ document.addEventListener('click', function(e) {
         const btn = e.target;
         const userId = btn.getAttribute('data-id');
         
+        // Llenar el formulario de actualización
         document.getElementById('updateStoreUserId').value = userId;
-        document.getElementById('updateStoreUserModal').dataset.currentId = userId;
-
-        document.getElementById("updateStoreUserName").value = btn.dataset.username;
-        document.getElementById("updateStoreUserEmail").value = btn.dataset.email;
+        document.getElementById('updateStoreUserName').value = btn.dataset.username;
+        document.getElementById('updateStoreUserEmail').value = btn.dataset.email;
         
-        // Seleccionar la tienda correcta en el select
+        // Seleccionar la tienda actual en el select
         const storeId = btn.dataset.storeId;
         const storeSelect = document.getElementById("updateStoreUserStoreId");
         storeSelect.value = storeId;
 
+        // Mostrar el modal
         document.getElementById("updateStoreUserModal").style.display = "block";
     }
 });

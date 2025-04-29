@@ -14,24 +14,24 @@ async function cargarCamiones() {
         
         // Limpiar selects
         selectCreacion.innerHTML = '<option value="">Seleccione un camión</option>';
-        selectActualizacion.innerHTML = '';
+        selectActualizacion.innerHTML = '<option value="">Seleccione un camión</option>';
         
         // Llenar con los camiones disponibles
         trucks.forEach(truck => {
             if(truck.status) { // Solo camiones activos
                 const option = document.createElement("option");
                 option.value = truck.truck_id;
-                option.textContent = `${truck.model} (Placa: ${truck.plate_number})`;
+                option.textContent = `${truck.model} (${truck.plate_number})`;
                 
                 selectCreacion.appendChild(option.cloneNode(true));
-                selectActualizacion.appendChild(option);
+                selectActualizacion.appendChild(option.cloneNode(true));
             }
         });
     } catch (error) {
         console.error("Error al cargar camiones:", error);
-        alert("Error al cargar la lista de camiones");
     }
 }
+
 
 // Llamar a cargarCamiones al cargar la página
 document.addEventListener("DOMContentLoaded", cargarCamiones);
@@ -94,6 +94,12 @@ document.getElementById("updateDriverForm").addEventListener("submit", async (ev
     const license = document.getElementById("updateDriverLicense").value;
     const truckId = document.getElementById("updateDriverTruckId").value;
 
+    // Validación básica
+    if (!truckId) {
+        alert("Por favor seleccione un camión");
+        return;
+    }
+
     try {
         const response = await fetch(`${urlDrivers}${id}`, {
             method: "PUT",
@@ -104,14 +110,14 @@ document.getElementById("updateDriverForm").addEventListener("submit", async (ev
                 first_name: firstName,
                 last_name: lastName,
                 license_number: license,
-                truck_id: truckId
+                truck_id: parseInt(truckId) // Enviar el nuevo truck_id
             })
         });
 
         if (response.ok) {
             alert("Conductor actualizado exitosamente.");
             document.getElementById("updateDriverModal").style.display = "none";
-            document.getElementById("searchDriverBtn").click();
+            buscarDrivers("", "", ""); // Refrescar lista
         } else {
             const errorMsg = await response.text();
             alert("Error al actualizar conductor: " + errorMsg);
@@ -122,12 +128,14 @@ document.getElementById("updateDriverForm").addEventListener("submit", async (ev
     }
 });
 
+
 // Buscar conductores
 document.getElementById("searchDriverBtn").addEventListener("click", async (e) => {
     e.preventDefault();
     const searchTerm = document.getElementById("searchDriver").value.trim();
     await buscarDrivers(searchTerm, "", "");
 });
+
 
 async function buscarDrivers(firstName, lastName, license) {
     try {
@@ -160,8 +168,8 @@ async function buscarDrivers(firstName, lastName, license) {
         }
 
         drivers.forEach(driver => {
-            const truckInfo = driver.truck_id ? 
-                `${driver.truck_model} (Placa: ${driver.truck_plate})` : 
+            const truckInfo = driver.truck ? 
+                `${driver.truck.model} (${driver.truck.plate_number})` : 
                 "Sin camión asignado";
             
             const item = document.createElement("li");
@@ -179,7 +187,7 @@ async function buscarDrivers(firstName, lastName, license) {
                             data-first-name="${driver.first_name}"
                             data-last-name="${driver.last_name}"
                             data-license="${driver.license_number}"
-                            data-truck-id="${driver.truck_id}">
+                            data-truck-id="${driver.truck ? driver.truck.truck_id : ''}">
                         Actualizar
                     </button>
                     <button class="delete-btn delete-driver-btn" 
@@ -209,7 +217,7 @@ document.addEventListener('click', function(e) {
         document.getElementById("updateDriverLastName").value = btn.dataset.lastName;
         document.getElementById("updateDriverLicense").value = btn.dataset.license;
         
-        // Seleccionar el camión correcto en el select
+        // Seleccionar el camión actual en el select
         const truckId = btn.dataset.truckId;
         const truckSelect = document.getElementById("updateDriverTruckId");
         truckSelect.value = truckId;

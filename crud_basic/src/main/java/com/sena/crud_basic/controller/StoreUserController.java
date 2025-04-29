@@ -58,24 +58,21 @@ public class StoreUserController {
    // Filtro
    @GetMapping("/filter")
    public ResponseEntity<List<StoreUser>> filterStoreUsers(
-           @RequestParam(required = false) String username,
-           @RequestParam(required = false) String email,
-           @RequestParam(required = false) Boolean status) {
-
-       List<StoreUser> result = storeUserService.filterStoreUsers(username, email, status);
-       return new ResponseEntity<>(result, HttpStatus.OK);
+           @RequestParam(required = false) String search) {
        
+       List<StoreUser> result = storeUserService.filterStoreUsers(search);
+       return new ResponseEntity<>(result, HttpStatus.OK);
    }
 
    
-   // Actualizar
-   @PutMapping("/{id}")
-   public ResponseEntity<Object> update(@PathVariable int id, @RequestBody StoreUserDTO dto) {
-       responseDTO response = storeUserService.updateStoreUser(id, dto);
-       if (response.getStatus().equals(HttpStatus.OK.toString())) {
-           return new ResponseEntity<>(response, HttpStatus.OK);
-       }
-       return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-   }
-
+   
+  // Actualizar
+@PutMapping("/{id}")
+public ResponseEntity<Object> update(@PathVariable int id, @RequestBody StoreUserDTO dto) {
+    responseDTO response = storeUserService.updateStoreUser(id, dto);
+    if (response.getStatus().equals(HttpStatus.OK.toString())) {
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+}
 }

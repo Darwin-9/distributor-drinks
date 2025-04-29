@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.StoreUserDTO;
 import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.model.StoreUser;
+import com.sena.crud_basic.repository.IStore;
 import com.sena.crud_basic.repository.IStoreUser;
+import com.sena.crud_basic.model.Store;
 
 @Service
 public class StoreUserService {
@@ -16,17 +18,26 @@ public class StoreUserService {
     @Autowired
     private IStoreUser data;
 
+    @Autowired
+    private IStore storeRepository;
+
     // Guardar con validaciones
     public responseDTO save(StoreUserDTO storeUserDTO) {
+        // Validaciones básicas
         if (storeUserDTO.getUsername().length() < 3 || storeUserDTO.getUsername().length() > 50) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre de usuario debe tener entre 3 y 50 caracteres");
         }
 
-        if (!isValidEmail(storeUserDTO.getEmail())) {
-            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El correo electrónico no tiene un formato válido");
+        if (storeUserDTO.getPassword().length() < 4) {
+            return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "La contraseña debe tener al menos 4 caracteres");
         }
 
+        // Validar que la tienda exista
+        Store store = storeRepository.findById(storeUserDTO.getStore_id())
+            .orElseThrow(() -> new RuntimeException("Tienda no encontrada"));
+
         StoreUser storeUser = convertToModel(storeUserDTO);
+        storeUser.setStore(store);
         data.save(storeUser);
 
         return new responseDTO(HttpStatus.OK.toString(), "Usuario de tienda guardado exitosamente");
@@ -63,33 +74,41 @@ public class StoreUserService {
 
     // Convertir a modelo
     public StoreUser convertToModel(StoreUserDTO storeUserDTO) {
-        return new StoreUser(0, storeUserDTO.getUsername(), storeUserDTO.getPassword() , storeUserDTO.getEmail(), null, true);
+        Store store = storeRepository.findById(storeUserDTO.getStore_id())
+            .orElseThrow(() -> new RuntimeException("Tienda no encontrada"));
+            
+        return new StoreUser(
+            0, 
+            storeUserDTO.getUsername(), 
+            storeUserDTO.getPassword(), 
+            storeUserDTO.getEmail(), 
+            store, 
+            true
+        );
     }
 
-    // Validar email
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return email.matches(emailRegex);
-    }
 
-  // Actualizar usuario con validaciones
-  public responseDTO updateStoreUser(int id, StoreUserDTO dto) {
+
+ // Actualizar usuario con tienda
+public responseDTO updateStoreUser(int id, StoreUserDTO dto) {
     Optional<StoreUser> storeUserOpt = data.findById(id);
     if (!storeUserOpt.isPresent()) {
-        return new responseDTO(HttpStatus.NOT_FOUND.toString(), "El usuario de tienda con ID " + id + " no existe");
+        return new responseDTO(HttpStatus.NOT_FOUND.toString(), "El usuario de tienda no existe");
     }
 
+    // Validaciones básicas
     if (dto.getUsername() == null || dto.getUsername().length() < 3 || dto.getUsername().length() > 50) {
         return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El nombre de usuario debe tener entre 3 y 50 caracteres");
     }
 
-    if (!isValidEmail(dto.getEmail())) {
-        return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El correo electrónico no tiene un formato válido");
-    }
+    // Obtener la tienda
+    Store store = storeRepository.findById(dto.getStore_id())
+        .orElseThrow(() -> new RuntimeException("Tienda no encontrada"));
 
     StoreUser existingUser = storeUserOpt.get();
     existingUser.setUsername(dto.getUsername());
     existingUser.setEmail(dto.getEmail());
+    existingUser.setStore(store); // Actualizar la tienda
 
     data.save(existingUser);
 
@@ -97,8 +116,11 @@ public class StoreUserService {
 }
 
      // Filtro
-     public List<StoreUser> filterStoreUsers(String username, String email, Boolean status) {
-        return data.filterStoreUsers(username, email, status);
+     public List<StoreUser> filterStoreUsers(String searchTerm) {
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            return data.findAll();
+        }
+        return data.filterStoreUsers(searchTerm.toLowerCase());
     }
     
 }

@@ -7,26 +7,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.sena.crud_basic.DTO.InventoryDTO;
 import com.sena.crud_basic.DTO.responseDTO;
+import com.sena.crud_basic.model.Drink;
 import com.sena.crud_basic.model.Inventory;
+import com.sena.crud_basic.repository.IDrink;
 import com.sena.crud_basic.repository.IInventory;
 
 @Service
 public class InventoryService {
 
     @Autowired
+    private IDrink drinkRepository;
+
+    @Autowired
     private IInventory data;
 
     // Método para guardar un registro de inventario con validaciones
-    public responseDTO save(InventoryDTO inventoryDTO) {
+      public responseDTO save(InventoryDTO inventoryDTO) {
+        // Validaciones como en DriverService
         if (inventoryDTO.getCurrent_stock() < 0) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El stock actual no puede ser negativo");
         }
 
+        // Verificar que el drink exista
+        Drink drink = drinkRepository.findById(inventoryDTO.getDrink_id())
+            .orElseThrow(() -> new RuntimeException("Bebida no encontrada"));
+
         Inventory inventory = convertToModel(inventoryDTO);
+        inventory.setDrink(drink); // Establecer la relación
         data.save(inventory);
 
         return new responseDTO(HttpStatus.OK.toString(), "Inventario guardado exitosamente");
     }
+
 
     // Método para obtener todos los registros de inventario
     public List<Inventory> findAll() {
@@ -37,15 +49,20 @@ public class InventoryService {
     public Optional<Inventory> findById(int id) {
         return data.findById(id);
     }
+    
 
     // Método para eliminar un registro de inventario por ID
-    public responseDTO deleteUser(int id) {
+   public responseDTO deleteUser(int id) {
         Optional<Inventory> inventory = findById(id);
         if (!inventory.isPresent()) {
             return new responseDTO(HttpStatus.BAD_REQUEST.toString(), "El registro de inventario no existe");
         }
-        data.deleteById(id);
-        return new responseDTO(HttpStatus.OK.toString(), "Registro de inventario eliminado correctamente");
+        
+        // Eliminación lógica
+        inventory.get().setStatus(false);
+        data.save(inventory.get());
+        
+        return new responseDTO(HttpStatus.OK.toString(), "Registro de inventario desactivado correctamente");
     }
 
 
@@ -78,11 +95,22 @@ public class InventoryService {
 
     // Método para convertir un modelo a un DTO
     public InventoryDTO convertToDTO(Inventory inventory) {
-        return new InventoryDTO(inventory.getCurrent_stock(), inventory.getLast_update());
+        return new InventoryDTO(
+            inventory.getDrink().getDrink_id(), // Asumiendo que Drink tiene getId()
+            inventory.getCurrent_stock(),
+            inventory.getLast_update(),
+            inventory.isStatus()
+        );
     }
 
     // Método para convertir un DTO a un modelo
     public Inventory convertToModel(InventoryDTO inventoryDTO) {
-        return new Inventory(0, null, inventoryDTO.getCurrent_stock(), inventoryDTO.getLast_update());
+        return new Inventory(
+            0, 
+            null, // drink se establece aparte
+            inventoryDTO.getCurrent_stock(), 
+            inventoryDTO.getLast_update(),
+            inventoryDTO.getStatus()
+        );
     }
 }

@@ -29,7 +29,6 @@ async function cargarTiendas() {
         });
     } catch (error) {
         console.error("Error al cargar tiendas:", error);
-        alert("Error al cargar la lista de tiendas");
     }
 }
 
@@ -80,7 +79,6 @@ document.getElementById("orderForm").addEventListener("submit", async (event) =>
 });
 
 // Actualizar orden
-// Actualizar orden - Versión corregida
 document.getElementById("updateOrderForm").addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -127,17 +125,12 @@ document.getElementById("searchOrderBtn").addEventListener("click", async (e) =>
     }
 });
 
-async function buscarOrders(date, searchTerm) {
+async function buscarOrders(searchTerm, status) {
     try {
         const url = new URL(`${urlOrders}filter`);
         
-        if (date) url.searchParams.append("order_date", date);
-        
-        if (searchTerm.toLowerCase() === "inactivos") {
-            url.searchParams.append("status", false);
-        } else {
-            url.searchParams.append("status", true);
-        }
+        if (searchTerm) url.searchParams.append("search", searchTerm);
+        url.searchParams.append("status", status);
 
         const response = await fetch(url);
         const orders = await response.json();
@@ -151,10 +144,6 @@ async function buscarOrders(date, searchTerm) {
         }
 
         orders.forEach(order => {
-            const storeInfo = order.store_name ? 
-                `${order.store_name} (${order.store_city})` : 
-                "Sin tienda asignada";
-            
             const formattedDate = new Date(order.order_date).toLocaleString('es-CO', {
                 year: 'numeric',
                 month: '2-digit',
@@ -162,21 +151,21 @@ async function buscarOrders(date, searchTerm) {
                 hour: '2-digit',
                 minute: '2-digit'
             });
-            
+
             const item = document.createElement("li");
             item.className = "order-item";
             item.innerHTML = `
                 <span>
                     <strong>Orden #${order.order_id}</strong><br>
                     Fecha: ${formattedDate}<br>
-                    Tienda: ${storeInfo}<br>
+                    Tienda: ${order.store ? order.store.name : 'Sin tienda asignada'}<br>
                     Estado: ${order.status ? 'Activo' : 'Inactivo'}
                 </span>
                 <div class="actions">
                     <button class="update-btn update-order-btn"
                             data-id="${order.order_id}"
                             data-date="${order.order_date}"
-                            data-store-id="${order.store_id}">
+                            data-store-id="${order.store ? order.store.store_id : ''}">
                         Actualizar
                     </button>
                     <button class="delete-btn delete-order-btn" 
@@ -192,6 +181,7 @@ async function buscarOrders(date, searchTerm) {
         alert("Error al buscar órdenes: " + error.message);
     }
 }
+
 
 // Manejar clic en botón actualizar
 document.addEventListener('click', function(e) {
