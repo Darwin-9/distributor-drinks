@@ -24,7 +24,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/roles/register","/api/users","api/users/login").permitAll() // <- públicos
+            .requestMatchers("/api/roles/register","/api/users","api/users/login","/api/v1/public/**").permitAll() // <- públicos
             .anyRequest().authenticated()
         )
         .formLogin(Customizer.withDefaults());
